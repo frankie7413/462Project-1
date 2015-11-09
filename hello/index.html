@@ -1,0 +1,158 @@
+
+<!doctype html>
+<html>
+<style>
+img{
+max-height:400px;
+max-width:400px;
+}
+</style>
+
+<head>
+    <meta charset="utf-8">
+    <title>We Are Space</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <script src="javascript/respond.js"></script>
+</head>
+<body>
+	<div class = "container">
+		<div class="row text-center">
+			<h1 class="col-lg-12 col-md-12 col-sm-5 ">We Are Space</h1>
+		</div>
+		
+		<nav class = "row">
+			<ul class="nav nav-pills nav-justified">
+				<li role="presentation"><a href="index.html">Home</a></li>
+				<li role="presentation"><a href="gallery.html">Gallery</a></li>
+				<li role="presentation"><a href="about.html">About</a></li>
+			</ul>
+		</nav>
+	
+		<!--Image Gallery -->
+		<div class="jumbotron">
+			<div>
+				<table class="column" align="center">
+					<tbody class="column" id="gallery-table">
+						<tr id="gallery-remainder"></tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<!--Modal for description-->
+		<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Photo Details</h4>
+		      </div>
+		      <div class="modal-body">
+		      here
+                <div id="photo_name"></div>
+                <div id="photo_loc"></div>
+                <div id="photo_date"></div>
+                <div id="photo_desc"></div><br />
+                <div id="photo_link"></div><br />
+		        llllllllll
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<!-- Button trigger modal for image upload -->
+		<button type="button" class="btn btn-default btn-lg pull-right" data-toggle="modal" data-target="#myModal">
+		  Upload Photo
+		</button>
+<img src = "uploads/Fig8.gif"></img>
+		<!-- Modal for image upload-->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Photo To Upload</h4>
+		      </div>
+		      <div class="modal-body">
+		       <form action="/upload" enctype="multipart/form-data" method="post">Add a title: <input name="title" type="text" />
+		       <input multiple="multiple" name="upload" type="file" /><br><br>
+			<input type="submit" value="Upload" /></form>'
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
+	<div id= "test"></div>
+	<div class="directorySlider"></div>
+		<div id='fileNames'> </div>
+	
+	</div>
+	 
+	</body>
+<!-- javascript -->
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+    var imageData = '';
+function getImage()
+{
+var dir = "images/";
+var fileextension = ".jpg";
+
+/*
+$.ajax({
+    //This will retrieve the contents of the folder if the folder is configured as 'browsable'
+    url: dir,
+    success: function (data) {
+        //List all .png file names in the page
+        $(data).find("a:contains(" + fileextension + ")").each(function () {
+            var filename = this.href.replace(window.location.host, "").replace("http://", "");
+           filename = filename.replace("/462/","");
+            $("body").append("<img src='" + dir + filename + "'></img>");
+            console.log(filename);
+        });
+    }
+});
+*/
+
+var fileExt = {};
+fileExt[0]=".png";
+    fileExt[1]=".jpg";
+
+     var dir = "uploads/";
+$.ajax({
+    //This will retrieve the contents of the folder if the folder is configured as 'browsable'
+    url: 'uploads/',
+    success: function (data) {
+       $("#fileNames").html('<ul>');
+       //List all png or jpg or gif file names in the page
+       $(data).find("a:contains(" + fileExt[0] + "),a:contains(" + fileExt[1] + ")").each(function () {
+           var filename = this.href.replace(window.location.host, "").replace("http://", "");
+           //filename = filename.replace("/462/","");
+           $("#fileNames").append( "<li><img src='"+dir +filename+"'></img></li>");
+           console.log(filename);
+       });
+       $("#fileNames").append('</ul>');
+     }     
+  });
+}
+
+
+
+getImage();
+</script>
+<!-- jQuery library (served from Google) -->
+
+<!-- directorySlider Javascript file -->
+<script src="directorySlider.js"></script>
+
+    
+</html>

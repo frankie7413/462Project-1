@@ -1,0 +1,41 @@
+extends profileTemplate
+block content
+      // main content start
+      section#main-content
+        section.wrapper
+          .row
+            .col-lg-12
+              h3.page-header
+                i.fa.fa-user-md
+                |  Profile
+          // page start
+          .row
+            .col-lg-12
+              section.panel
+                .panel-body
+                  .panel-body.bio-graph-info
+                    h1 Your Information:
+                    .row
+                      .bio-row
+                        p
+                          span First Name: 
+                          |  #{fname}
+                      .bio-row
+                        p
+                          span Last Name: 
+                          |  #{lname}
+                      .bio-row
+                        p
+                          span University: 
+                          |  #{university}
+                      .bio-row
+                        p
+                          span Email: 
+                          | #{email}
+                      .bio-row
+                        p
+                          span Verify:
+                          | #{verify}
+          // page end
+      // main content end
+

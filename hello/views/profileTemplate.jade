@@ -1,0 +1,86 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='description', content='Creative - Bootstrap 3 Responsive Admin Template')
+    meta(name='author', content='GeeksLabs')
+    meta(name='keyword', content='Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal')
+    link(rel='shortcut icon', href='img/favicon.png')
+    title Quick Feedback
+    // Bootstrap CSS
+    link(href='/profPublic/css/bootstrap.min.css', rel='stylesheet')
+    // bootstrap theme
+    link(href='/profPublic/css/bootstrap-theme.css', rel='stylesheet')
+    // external css
+    // font icon
+    <link rel="shortcut icon" href="/images/favicon.ico" >
+    link(href='/profPublic/css/elegant-icons-style.css', rel='stylesheet')
+    link(href='/profPublic/css/font-awesome.min.css', rel='stylesheet')
+    // Custom styles
+    link(href='/profPublic/css/style.css', rel='stylesheet')
+    link(href='/profPublic/css/style-responsive.css', rel='stylesheet')
+    // HTML5 shim and Respond.js IE8 support of HTML5
+    //if lt IE 9
+      script(src='profPublic/js/html5shiv.js')
+      script(src='profPublic/js/respond.min.js')
+      script(src='profPublic/js/lte-ie7.js')
+  body
+    // container section start
+    section#container
+      // header start
+      header.header.dark-bg
+        // logo start
+        a.logo(href='/users')
+          | Hello 
+          span.lite #{fname}
+        // logo end
+      // header end
+      // sidebar start
+      aside
+        #sidebar.nav-collapse
+          // sidebar menu start
+          ul.sidebar-menu
+            li.active
+              a(href='/users')
+                i.icon_house_alt
+                span Home
+            li.sub-menu
+              a(href='javascript:;')
+                i.icon_document_alt
+                span Messages
+                span.menu-arrow.arrow_carrot-right
+              ul.sub
+                li
+                  a(href='/users/messagesView') View Messages
+                li
+                  a(href='/users/archiveView') View Archive
+            li
+              a(href='/users/editAccountView')
+                i.icon_genius
+                span Edit Account
+            li
+              a(href='/users/logout')
+                i.icon_piechart
+                span Log Out
+          // sidebar menu end
+      // sidebar end
+      block content
+
+
+
+
+    // container section end
+    // javascripts
+    script(src='/profPublic/js/jquery.js')
+    script(src='/profPublic/js/bootstrap.min.js')
+    // nice scroll
+    script(src='/profPublic/js/jquery.scrollTo.min.js')
+    script(src='/profPublic/js/jquery.nicescroll.js', type='text/javascript')
+    // jquery knob
+    script(src='/profPublic/assets/jquery-knob/js/jquery.knob.js')
+    // custome script for all page
+    script(src='/profPublic/js/scripts.js')
+    script.
+      //knob
+      $(".knob").knob();

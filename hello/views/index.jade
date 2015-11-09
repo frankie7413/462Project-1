@@ -1,5 +1,21 @@
-extends layout
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    title Dope - Home
+    
+  body#page-top
+    form(action='/upload', enctype='multipart/form-data', method='post')
+      input(multiple='multiple', name='upload', type='file')
+      br
+      br
+      input(type='submit', value='Upload')
 
-block content
-  h1= title
-  p Welcome to #{title}
+    // jQuery
+    script(src='stylesheets/js/jquery.js')
+    script(src='javascripts/appProf.js')
+    

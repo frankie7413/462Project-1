@@ -1,0 +1,39 @@
+extends profileTemplate
+block content
+      // main content start
+      section#main-content
+        section.wrapper
+          .row
+            .col-lg-12
+              h3.page-header
+                i.fa.fa-user-md
+                |  Messages
+          .row
+            .col-lg-12
+              section.panel
+                header.panel-heading.tab-bg-info
+                  .dropdown
+                    button.btn.btn-primary.dropdown-toggle(type='button', data-toggle='dropdown')
+                      | Fall 2014
+                      span.caret
+                    ul.dropdown-menu
+                      li
+                        a(href='#') Computer Science 323
+                      li
+                        a(href='#') Computer Science 335
+                      li
+                        a(href='#') Computer Science 332
+                  .dropdown
+                    button.btn.btn-primary.dropdown-toggle(type='button', data-toggle='dropdown')
+                      | Spring 2015
+                      span.caret
+                    ul.dropdown-menu
+                      li
+                        a(href='#') Computer Science 462
+                      li
+                        a(href='#') Computer Science 463
+                      li
+                        a(href='#') Computer Science 464
+          // page end
+      // main content end
+

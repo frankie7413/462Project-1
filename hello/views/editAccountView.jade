@@ -1,0 +1,65 @@
+extends profileTemplate
+block content
+      // main content start
+      section#main-content
+        section.wrapper
+          .row
+            .col-lg-12
+              h3.page-header
+                i.fa.fa-files-o
+                |  Edit Account
+          // Form validations
+          .row
+            .col-lg-12
+              section.panel
+                header.panel-heading
+                  | Form validations
+                .panel-body
+                  .form
+                    form#feedback_form.form-validate.form-horizontal(method='post', action='/professor/update')
+                      .form-group
+                        label.control-label.col-lg-2(for='cname')
+                          | First Name 
+                          span.required 
+                        .col-lg-10
+                          input#cname.form-control(name='fname', minlength='0', type='text')
+                      .form-group
+                        label.control-label.col-lg-2(for='cname')
+                          | Last Name 
+                          span.required 
+                        .col-lg-10
+                          input#cname.form-control(name='lname', minlength='0', type='text')
+                      .form-group
+                        label.control-label.col-lg-2(for='cemail')
+                          | E-Mail 
+                          span.required 
+                        .col-lg-10
+                          input#cemail.form-control(type='email', name='email')
+                      .form-group
+                        label.control-label.col-lg-2(for='curl') College
+                        .col-lg-10
+                          input#curl.form-control(type='text', name='college')
+                      .form-group
+                        label.control-label.col-lg-2(for='cname')
+                          | Subject 
+                          span.required *
+                        .col-lg-10
+                          input#subject.form-control(name='subject', minlength='0', type='text')
+                      .form-group
+                        .col-lg-offset-2.col-lg-10
+                          button.btn.btn-primary(type='submit') Save
+          // page end
+      // main content end
+    // container section end
+    // javascripts
+    script(src='js/jquery.js')
+    script(src='js/bootstrap.min.js')
+    // nice scroll
+    script(src='js/jquery.scrollTo.min.js')
+    script(src='js/jquery.nicescroll.js', type='text/javascript')
+    // jquery validate js
+    script(type='text/javascript', src='js/jquery.validate.min.js')
+    // custom form validation script for this page
+    script(src='js/form-validation-script.js')
+    // custome script for all page
+    script(src='js/scripts.js')

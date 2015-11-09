@@ -1,0 +1,67 @@
+extends profileTemplate
+block content
+      // main content start
+      section#main-content
+        section.wrapper
+          .row
+            .col-lg-12
+              h3.page-header
+                i.fa.fa-user-md
+                |  Messages
+          .row
+            .col-lg-12
+              section.panel
+                header.panel-heading.tab-bg-info
+                  ul.nav.nav-tabs
+                    li.active
+                      a(data-toggle='tab', href='#462')
+                        i.icon-home
+                        |                                           Computer Science 462
+                    li
+                      a(data-toggle='tab', href='#353')
+                        i.icon-user
+                        |                                           Computer Science 353
+                    li
+                      a(data-toggle='tab', href='#440')
+                        i.icon-envelope
+                        |                                           Computer Science 440
+                .panel-body
+                  .tab-content
+                    #462.tab-pane.active
+                      .462
+                        .act-time
+                          .activity-body.act-in
+                            span.arrow
+                            .text
+                              a.activity-img(href='#')
+                                img.avatar(src='/profPublic/img/chat-avatar.jpg', alt='')
+                              p.attribution
+                                a(href='#') Help with 462!
+                                |  at 4:25pm, 30th Octmber 2014
+                    // profile
+                    #353.tab-pane
+                      .353
+                        .act-time
+                          .activity-body.act-in
+                            span.arrow
+                            .text
+                              a.activity-img(href='#')
+                                img.avatar(src='/profPublic/img/chat-avatar.jpg', alt='')
+                              p.attribution
+                                a(href='#') Help with 353!
+                                |  at 4:25pm, 30th Octmber 2014
+                    // edit-profile
+                    #440.tab-pane
+                      .440
+                        .act-time
+                          .activity-body.act-in
+                            span.arrow
+                            .text
+                              a.activity-img(href='#')
+                                img.avatar(src='/profPublic/img/chat-avatar.jpg', alt='')
+                              p.attribution
+                                a(href='#') Help with 440!
+                                |  at 4:25pm, 30th Octmber 2014
+          // page end
+      // main content end
+

@@ -1,0 +1,80 @@
+account
+
+{
+	firstname
+	lastname
+	email
+	college
+	password
+	verify
+}
+
+
+login
+{
+	email
+	password
+	idAccount: 213513520
+}
+
+after mailer is done
+if not verified: redirect to simple page 
+else show homepage
+
+
+session.username = email
+session.id = 213513520
+
+selected by prof 
+courseDescription
+{
+	college: CSUF
+	major: computer science
+	semester: fall
+	year: 2015
+	class: 335
+}
+
+courseDescrip.find(major)
+courseProf.save()
+
+after prof picks
+
+CourseProf
+{
+	idAccount: 1654165135
+	Prof: firstname blah blah
+	college: CSUF
+	major: computer science
+	semester: fall 
+	year: 2015
+	class: 335
+	_id
+}
+
+for prof page:
+courseProf.find(idAccount);
+find all the courses prof is teaching
+
+
+for prof message:
+message.find(currentCourses)
+
+
+for student page:
+courseProf.find(collge, major);
+
+Might have to make student select school and major before showing courses
+
+when making message, the message will save the courseProf ID
+message
+{
+	college: csuf
+	major: compsci
+	courses: courseProf ID
+	subject:
+	email: secret
+	message: 
+}
+
+message.find(courseProfID)

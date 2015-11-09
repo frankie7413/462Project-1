@@ -1,0 +1,118 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    title Student Feedback - Professor
+    // Bootstrap Core CSS
+    link(rel='stylesheet', href='stylesheets/css/bootstrap.min.css', type='text/css')
+    // Custom Fonts
+    link(href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800', rel='stylesheet', type='text/css')
+    link(href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic', rel='stylesheet', type='text/css')
+    link(rel='stylesheet', href='stylesheets/font-awesome/css/font-awesome.min.css', type='text/css')
+    // Plugin CSS
+    link(rel='stylesheet', href='stylesheets/css/animate.min.css', type='text/css')
+    // Custom CSS
+    link(rel='stylesheet', href='stylesheets/css/creative.css', type='text/css')
+    link(rel='stylesheet', href='stylesheets/css/style.css', type='text/css')
+    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+    // WARNING: Respond.js doesn't work if you view the page via file://
+    //if lt IE 9
+      script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+      script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+  body#page-top
+    nav#mainNav.navbar.navbar-default.navbar-fixed-top
+      .container-fluid
+        // Brand and toggle get grouped for better mobile display
+        .navbar-header
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand.page-scroll(href='#page-top') Student Feedback
+        // Collect the nav links, forms, and other content for toggling
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav.navbar-right
+            li
+              a.page-scroll(href='/') Home
+        // /.navbar-collapse
+      // /.container-fluid
+    header
+      .header-content
+        .header-content-inner
+          h1 Professor Form
+          hr
+          p Become part of what every professor on campus is talking about.
+          a.btn.btn-primary.btn-xl.page-scroll(href='#LogIn') Log In
+          a.btn.btn-primary.btn-xl.page-scroll(href='#SignUp') Sign Up
+    section#LogIn.bg-dark
+      .container
+        .row
+          .col-lg-8.col-lg-offset-2.text-center
+            h2.section-heading.text-left Log In
+            hr.light
+            p.text-faded
+            p#logEmailText Email: 
+            input#logEmail.form-size(type='text', name='email', placeholder='.edu email required')
+            p#logPasswordText Password:
+            input#logPassword.form-size(type='password', name='password', placeholder='case sensitive')
+            br
+            br
+            input#logButton.btn.btn-default.btn-xl(type='button', name='button', value='submit')
+            p#logFill
+    section#SignUp.bg-primary
+      .container
+        .row
+          .col-lg-8.col-lg-offset-2
+            h2.section-heading Sign Up!
+            hr.light
+            #submitForm
+              .btn-group
+                p#collegeOption College
+                select#colleges.btn.btn-default
+                  option(value='college') Select Campus
+                  option(value='CSUF') CSUF
+              p#fnameText First Name: 
+              input#fname.form-control(type='text', placeholder='First Name')
+              p#lnameText Last Name: 
+              input#lname.form-control(type='text', placeholder='Last Name')
+              p#emailText Email: 
+              input#email.form-control(type='text', placeholder='Email must be .edu')
+              p#passwordText Password: 
+              input#password.form-control(type='password', name='Password', placeholder='Must be 8 characters, contain 1 digit & 1 letter')
+              p#repasswordText Retype-Password: 
+              input#passwordType.form-control(type='password', name='Password', placeholder='Must be 8 characters, contain 1 digit & 1 letter')
+              p#fillSection
+              input#signButton.btn.btn-default.btn-xl(type='button', name='button', value='submit')
+    section#contact
+      .container
+        .row
+          .col-lg-8.col-lg-offset-2.text-center
+            h2.section-heading Let's Get In Touch!
+            hr.primary
+            p
+              | Got any questions on our service? We will answer any question or concern you may have!
+          .col-lg-4.col-lg-offset-2.text-center
+            i.fa.fa-phone.fa-3x.wow.bounceIn
+            p 1-800-GitGUD
+          .col-lg-4.text-center
+            i.fa.fa-envelope-o.fa-3x.wow.bounceIn(data-wow-delay='.1s')
+            p
+              a(href='mailto:your-email@your-domain.com') feedbackUS@gmail.com
+    // jQuery
+    script(src='stylesheets/js/jquery.js')
+    // Bootstrap Core JavaScript
+    script(src='stylesheets/js/bootstrap.min.js')
+    // Plugin JavaScript
+    script(src='stylesheets/js/jquery.easing.min.js')
+    script(src='stylesheets/js/jquery.fittext.js')
+    script(src='stylesheets/js/wow.min.js')
+    script(src='javascripts/appProf.js')
+    // Custom Theme JavaScript
+    script(src='stylesheets/js/creative.js')
+// http://silviomoreto.github.io/bootstrap-select/
+
