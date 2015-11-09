@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- 4.1) The components of the login page should be:
+- A title for the form with a simple message that tells the user what to do
+- A username and password inputs
+- A submit button (does nothing)
+- A link to sign up (which should show sign up page)
+- A link to forgot password
+
+Johanna Ruiz -->
+
+<html>
+
+	<head>
+		<head>
+			<title>login</title>
+			<!-- ======== Meta tag for bootstrap ====== -->
+			<meta charset="utf-8">
+    		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    		<meta name="viewport" content="width=device-width, initial-scale=1">
+    		<!-- ====================================== -->
+			<link rel="stylesheet" type="text/css" href="reset.css">
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+			<link href='http://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'>
+      		<link rel="stylesheet" type="text/css" href="style.css">
+		</head>
+	</head>
+
+	<body>
+		<header>
+			<h1>Welcome to our login page</h1>
+			<br>
+			<br>
+		</header>
+		<main>
+			<h3>Please enter your username and password</h3>
+			<form>
+			    <!-- username: <input type="text" name="username"> <br>
+			    password: <input type="text" name="password"> <br> -->
+			    <form>
+					<div class="form-group">
+					    <label for="usernameInput">Username</label>
+					    <input type="text" class="form-control" id="usernameInput" placeholder="Username">
+					</div>
+					<div class="form-group">
+					    <label for="exampleInputPassword1">Password</label>
+					    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+			        
+			    <!-- <input type="submit" value="submit"> -->
+			</form>
+		</main>
+			<footer>
+				<h3>Don't have one or forgot your password? Click on the appropriate link.</h3>
+				<a href="signup.html"> Signup </a>
+				<br>
+				<a href="forgotPassword.html"> Forgot Password? </a>
+			</footer>
+		</body>
+	</html>
+
