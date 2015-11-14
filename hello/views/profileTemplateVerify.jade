@@ -31,7 +31,7 @@ html(lang='en')
       // header start
       header.header.dark-bg
         // logo start
-        a.logo(href='/users')
+        a.logo(href='/profile')
           | Hello 
           span.lite #{fname}
         // logo end
@@ -42,7 +42,7 @@ html(lang='en')
           // sidebar menu start
           ul.sidebar-menu
             li.active
-              a(href='/users')
+              a(href='/profile')
                 i.icon_house_alt
                 span Home
             li.sub-menu
@@ -60,7 +60,7 @@ html(lang='en')
                 i.icon_genius
                 span Edit Account
             li
-              a(href='/users/logout')
+              a(href='/profile/logout')
                 i.icon_piechart
                 span Log Out
           // sidebar menu end

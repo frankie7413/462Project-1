@@ -12,9 +12,7 @@ var main = function() {
 		logPassword,
 		regInfo,
 		loginInfo;
-		
-	loadScript();
-	geoTest();
+
 	//Sign up section create database entry
 	//makes sure that the fields have a valid input and fowards content to server
 	function SectionmissingField(check){
@@ -25,13 +23,16 @@ var main = function() {
 		} else {
 			console.log('Inputs are complete');
 			//PostInformation();
-			regInfo = {'Email': email,'Password': password};
-			$.post("/SignUp", regInfo, function(data){
-				PostInformation(data);
+			regInfo = {'firstName': fname, 'lastName': lname, 'email': email, 'college': college, 'password': password};
+
+			$.post("/signUp", regInfo, function(data){
+				//PostInformation(data);
+				// console.log('/signup called');
+				window.location = 'profile';
 			});
 		}
 	}
-
+2
 	function logError(errCheck){
 		$('#logFill').empty(); //for when user does nor fill fields properly
 			
@@ -53,10 +54,12 @@ var main = function() {
 			$('#logFill').append('Please fill in area(s) with *.');
 		} else {
 			console.log('Inputs are complete');
-			loginInfo = {'Email': logEmail, 'Password': logPassword};
-			$.post("/Login", loginInfo, function(status){
-				if(status.logon) {
-					window.location = 'users';
+			loginInfo = {'email': logEmail, 'password': logPassword};
+			$.post("/login", loginInfo, function(status){
+				//console.log(data);
+				//window.location = 'profile';
+				if(status.url) {
+					window.location = 'profile';
 				}
 				else if(status.password){
 					logError('password');
@@ -64,6 +67,12 @@ var main = function() {
 				else {
 					logError('exist');
 				}
+				// if(status.url) {
+				// 	window.location = 'profile';
+				// }
+				// else {
+				// 	$.get("/login");
+				// }
 			});
 		}
 	}
@@ -76,8 +85,11 @@ var main = function() {
 		$('#submitForm').append($('<p class="text-center">').text('Your infomation that you entered:'));
 
 		$content = $('<ul class="text-center">');
+		$content.append($('<li>').text('College: ' + data.College));
+		$content.append($('<li>').text('First Name '+ data.FirstName));
+		$content.append($('<li>').text('Last Name: '+ data.LastName));
 		$content.append($('<li>').text('Email: '+ data.Email));
-		$content.append($('<li>').text('password: '+ data.Password));
+		//$content.append($('<li>').text('password: '+ data.Password));
 
 		$('#submitForm').append($content);
 	}
@@ -142,11 +154,12 @@ var main = function() {
 
 	$('#logButton').click(function(){
 		missingField = true;
-
+	logEmail = $('#logEmail').val();
+	console.log(logEmail+"LL");
 		if($('#logEmail').val() === ''){
 			missingField = false;
-			$('#logEmailText').empty();
-			$('#logEmailText').append('Email:*');
+			$('#ErrorMessage').empty();
+			$('#ErrorMessage').append('Incorrect Email');
 		} else {
 			logEmail = $('#logEmail').val();
 			if(validateEmail(logEmail)){
@@ -158,28 +171,28 @@ var main = function() {
 				missingField = false;
 				logEmail = '';
 				$('#logEmail').val('');
-				$('#logEmailText').empty();
-				$('#logEmailText').append('Email:* Please Enter Valid Email');
+				$('#ErrorMessage').empty();
+				$('#ErrorMessage').append('Email:* Please Enter Valid Email');
 			}
 		}
 
 		if($('#logPassword').val() === ''){
 			missingField = false;
-			$('#logPasswordText').empty();
-			$('#logPasswordText').append('Password: *');
+			$('#ErrorMessage').empty();
+			$('#ErrorMessage').append('Incorrect Password');
 		} else {
 			logPassword = $('#logPassword').val();
 			if(validatePassword(logPassword)){
 				console.log('Valid Password');
 				console.log(logPassword);
-				$('#logPasswordText').empty();
-				$('#logPasswordText').append('Password:');
+			//	$('#logPasswordText').empty();
+			//	$('#logPasswordText').append('Password:');
 			} else{
 				missingField = false;
 				logPassword = '';
 				$('#logPassword').val('');
-				$('#logPasswordText').empty();
-				$('#logPasswordText').append('Password:* Please Enter Valid Password');
+				$('#ErrorMessage').empty();
+				$('#ErrorMessage').append('Password:* Please Enter Valid Password');
 			}
 		}
 
@@ -264,32 +277,7 @@ var main = function() {
 	});
 };
 
-function geoTest() {
- 
-    $.get("http://ipinfo.io", function (response) {
-    $("#ip").html("IP: " + response.ip);
-    
-    city = response.city;
-   console.log(city);
-   var loc = {"city": city, "username": "frankthetank"};
-   $.post("/Location", loc, function(data){
-				console.log("geoTest");
-				
-				console.log(data[0]+" "+data[1]);
-			});
-}, "jsonp");
-}
-
 $(document).ready(main);
-
-function loadScript() {
-  var script = document.createElement("script");
-  script.type = "text/javascript";
-  //script.src = "http://www.google.com/jsapi";
-  document.body.appendChild(script);
-  console.log("H");
-}
-
 
 //http://jshint.com/
 //configure enable jquery

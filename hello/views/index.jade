@@ -1,21 +1,203 @@
-doctype html
-html(lang='en')
-  head
-    meta(charset='utf-8')
-    meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-    meta(name='description', content='')
-    meta(name='author', content='')
-    title Dope - Home
-    
-  body#page-top
-    form(action='/upload', enctype='multipart/form-data', method='post')
-      input(multiple='multiple', name='upload', type='file')
-      br
-      br
-      input(type='submit', value='Upload')
+html
+  link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+  script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+  style.
+    body
+    {
+    background: url('http://farm3.staticflickr.com/2832/12303719364_c25cecdc28_b.jpg') fixed;
+    background-size: cover;
+    padding: 0;
+    margin: 0;
+    }
+    .wrap
+    {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    }
+    p.form-title
+    {
+    font-family: 'Open Sans' , sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    color: #FFFFFF;
+    margin-top: 5%;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    }
+    section
+    {
+    width: 250px;
+    margin: 0 auto;
+    }
+    section.login input[type="text"], section.login input[type="password"]
+    {
+    width: 100%;
+    margin: 0;
+    padding: 5px 10px;
+    background: 0;
+    border: 0;
+    border-bottom: 1px solid #FFFFFF;
+    outline: 0;
+    font-style: italic;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    color: #FFFFFF;
+    outline: 0;
+    }
+    section.login input[type="submit"]
+    {
+    width: 100%;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-top: 16px;
+    outline: 0;
+    cursor: pointer;
+    letter-spacing: 1px;
+    }
+    section.login input[type="submit"]:hover
+    {
+    transition: background-color 0.5s ease;
+    }
+    section.login .remember-forgot
+    {
+    float: left;
+    width: 100%;
+    margin: 10px 0 0 0;
+    }
+    section.login .forgot-pass-content
+    {
+    min-height: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    }
+    section.login label, form.login a
+    {
+    font-size: 12px;
+    font-weight: 400;
+    color: #FFFFFF;
+    }
+    section.login a
+    {
+    transition: color 0.5s ease;
+    }
+    section.login a:hover
+    {
+    color: #2ecc71;
+    }
+    .pr-wrap
+    {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    display: none;
+    }
+    .show-pass-reset
+    {
+    display: block !important;
+    }
+    .pass-reset
+    {
+    margin: 0 auto;
+    width: 250px;
+    position: relative;
+    margin-top: 22%;
+    z-index: 999;
+    background: #FFFFFF;
+    padding: 20px 15px;
+    }
+    .pass-reset label
+    {
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 15px;
+    }
+    .pass-reset input[type="email"]
+    {
+    width: 100%;
+    margin: 5px 0 0 0;
+    padding: 5px 10px;
+    background: 0;
+    border: 0;
+    border-bottom: 1px solid #000000;
+    outline: 0;
+    font-style: italic;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    color: #000000;
+    outline: 0;
+    }
+    .pass-reset input[type="submit"]
+    {
+    width: 100%;
+    border: 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-top: 10px;
+    outline: 0;
+    cursor: pointer;
+    letter-spacing: 1px;
+    }
+    .pass-reset input[type="submit"]:hover
+    {
+    transition: background-color 0.5s ease;
+    }
+    .posted-by
+    {
+    position: absolute;
+    bottom: 26px;
+    margin: 0 auto;
+    color: #FFF;
+    background-color: rgba(0, 0, 0, 0.66);
+    padding: 10px;
+    left: 45%;
+    }
+  .container
+    .row
+      .col-md-12
+        .pr-wrap
+          .pass-reset
+            label Enter the email you signed up with
+            input(type='email', placeholder='Email')
+            input.pass-reset-submit.btn.btn-success.btn-sm(type='submit', value='Submit')
+        .wrap
+          p.form-title Sign In
+          section.login
+            input#logEmail(type='text', placeholder='Username')
+            input#logPassword(type='password', placeholder='Password')
+            input#logButton.btn.btn-success.btn-sm(type='submit', value='Sign In')
+            .remember-forgot
+              .row
+                .col-md-6
+                  .checkbox
+                    label
+                      input(type='checkbox')
+                      |                                     Remember Me
+                .col-md-6.forgot-pass-content
+                  a.forgot-pass(href='javascription:void(0)') Forgot Password
+  // Bootstrap Core JavaScript
+  script(src='stylesheets/js/bootstrap.min.js')
+  // Plugin JavaScript
+  script(src='stylesheets/js/jquery.easing.min.js')
+  script(src='stylesheets/js/jquery.fittext.js')
+  script(src='stylesheets/js/wow.min.js')
+  script(src='javascripts/appProf.js')
+  // Custom Theme JavaScript
+  script(src='stylesheets/js/creative.js')
 
-    // jQuery
-    script(src='stylesheets/js/jquery.js')
-    script(src='javascripts/appProf.js')
-    

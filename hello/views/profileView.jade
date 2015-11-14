@@ -1,41 +1,21 @@
-extends profileTemplate
-block content
-      // main content start
-      section#main-content
-        section.wrapper
-          .row
-            .col-lg-12
-              h3.page-header
-                i.fa.fa-user-md
-                |  Profile
-          // page start
-          .row
-            .col-lg-12
-              section.panel
-                .panel-body
-                  .panel-body.bio-graph-info
-                    h1 Your Information:
-                    .row
-                      .bio-row
-                        p
-                          span First Name: 
-                          |  #{fname}
-                      .bio-row
-                        p
-                          span Last Name: 
-                          |  #{lname}
-                      .bio-row
-                        p
-                          span University: 
-                          |  #{university}
-                      .bio-row
-                        p
-                          span Email: 
-                          | #{email}
-                      .bio-row
-                        p
-                          span Verify:
-                          | #{verify}
-          // page end
-      // main content end
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    title Dope - Home
+    
+  body#page-top
+    form(action='profile/upload', enctype='multipart/form-data', method='post')
+      input(multiple='multiple', name='upload', type='file')
+      br
+      br
+      input(type='submit', value='Upload')
 
+    // jQuery
+    script(src='stylesheets/js/jquery.js')
+    script(src='javascripts/homepageGeo.js')
+    
