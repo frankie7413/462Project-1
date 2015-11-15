@@ -1,21 +1,164 @@
 doctype html
 html(lang='en')
   head
-    meta(charset='utf-8')
-    meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-    meta(name='description', content='')
-    meta(name='author', content='')
-    title Dope - Home
-    
-  body#page-top
-    form(action='profile/upload', enctype='multipart/form-data', method='post')
-      input(multiple='multiple', name='upload', type='file')
-      br
-      br
-      input(type='submit', value='Upload')
+    meta(charset='UTF-8')
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+    script.
+      function getLocation() {
+      if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+      x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+      }
+      function showPosition(position) {
+      var latlon = position.coords.latitude + "," + position.coords.longitude;
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      var scale = 2
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+      scale = 1
+      }
+      var img_url = "http://maps.googleapis.com/maps/api/staticmap?center="
+      +latlon+"&markers="+latlon+"&zoom=13&size="+w+"x"+h+"&scale="+scale+"&key=AIzaSyA9obqVtqZ5v5VyIcCxQ2GUUM8wSur5Qk8&sensor=false";
+      console.log(img_url + "GGGG")
+      //document.getElementById("introLoader").style.class = "test";
+      var c = document.getElementsByClassName("intro");
+      c[0].style.backgroundImage="url('"+img_url+"')";
+      }
+      function showError(error) {
+      switch(error.code) {
+      case error.PERMISSION_DENIED:
+      x.innerHTML = "User denied the request for Geolocation."
+      break;
+      case error.POSITION_UNAVAILABLE:
+      x.innerHTML = "Location information is unavailable."
+      break;
+      case error.TIMEOUT:
+      x.innerHTML = "The request to get user location timed out."
+      break;
+      case error.UNKNOWN_ERROR:
+      x.innerHTML = "An unknown error occurred."
+      break;
+      }
+      }
+      window.onload = getLocation;
+    script(src='http://code.jquery.com/jquery-latest.min.js')
+    script.
+      var imageData = '';
+      function getImage()
+      {
+      var dir = "images/";
+      var fileextension = ".jpg";
+      var fileExt = {};
+      fileExt[0]=".png";
+      fileExt[1]=".jpg";
+      var dir = "images/";
+      $.ajax({
+      //This will retrieve the contents of the folder if the folder is configured as 'browsable'
+      url: 'uploads/',
+      success: function (data) {
+      //$("#row").html('');
+      //List all png or jpg or gif file names in the page
+      $(data).find("a:contains(" + fileExt[0] + "),a:contains(" + fileExt[1] + ")").each(function () {
+      var filename = this.href.replace(window.location.host, "").replace("http://", "");
+      console.log(filename);
+      filename = filename.replace("/myapp/","");
+      var path = dir+filename;
+      $("#row").append('<div class="col-sm-4 fadeInUp wowload"><div class="gallery-items">'+"<img class='img-responsive' src='"+path+ "'alt=item01'/>"+'<div class="caption"><h3>'+filename+'</h3> <a href="'+path+'" title="Digial Agency" class="gallery-image btn btn-default" data-gallery>View Details</a></div></div></div>');
+      // $("#row").append( "<img class='img-responsive' src='"+path+ "'alt=item01'/>");
+      // $("#row").append('<div class="caption"><h3>'+filename+'</h3> <a href="'+path+'" title="Digial Agency" class="gallery-image btn btn-default" data-gallery>View Details</a></div></div></div>');
+      });
+      }
+      });
+      }
+      getImage();
+    title Welcome2
+    // Google fonts
+    link(href='http://fonts.googleapis.com/css?family=Roboto:400,300,700', rel='stylesheet', type='text/css')
+    // font awesome
+    link(href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', rel='stylesheet')
+    // bootstrap
+    link(rel='stylesheet', href='assets/bootstrap/css/bootstrap.min.css')
+    // animate.css
+    link(rel='stylesheet', href='assets/animate/animate.css')
+    // gallery
+    link(rel='stylesheet', href='assets/gallery/blueimp-gallery.min.css')
+    // favicon
+    link(rel='shortcut icon', href='images/favicon.png', type='image/x-icon')
+    link(rel='icon', href='images/favicon.png', type='image/x-icon')
+    link(rel='stylesheet', type='text/css', href='assets/slidingheader/layout-simple.css')
+    link(rel='stylesheet', href='assets/style.css')
+  body#home
+    #container
+      header.intro(style='background-position:cen‌​ter;\
+      background-repeat:no-repeat;background-size: 100% 100%;')
+        .intro__content
+          h1 Modex Creatives
+          button.trigger
+            svg(width='100%', height='100%', viewbox='0 0 60 60', preserveaspectratio='none')
+              g.icon.icon--grid
+                rect(x='32.5', y='5.5', width='22', height='22')
+                rect(x='4.5', y='5.5', width='22', height='22')
+                rect(x='32.5', y='33.5', width='22', height='22')
+                rect(x='4.5', y='33.5', width='22', height='22')
+              g.icon.icon--cross
+                line(x1='4.5', y1='55.5', x2='54.953', y2='5.046')
+                line(x1='54.953', y1='55.5', x2='4.5', y2='5.047')
+            span View content
+        // /intro__content
+      // /intro
+      section.items-wrap
+        .container
+          .spacer
+            #row.row
+    // /container
+    .about
+      .overlay.spacer.text-center
+        .container
+          h2
+            | Hellow! We are 
+            b Modex Creatives
+          p
+            | Creative digital agency for sleek and sophisticated solutions for mobile, websites and software designs, lead by passionate and uber progressive team that lives and breathes design. Creative digital agency for sleek and sophisticated solutions for mobile, websites and software designs.
+          .wowload.fadeInUp.social
+            a(href='#')
+              i.fa.fa-facebook.fa-2x
+            a(href='#')
+              i.fa.fa-instagram.fa-2x
+            a(href='#')
+              i.fa.fa-twitter.fa-2x
+            a(href='#')
+              i.fa.fa-flickr.fa-2x
+    .text-center.copyright
+      | Powered by 
+      a(href='http://thebootstrapthemes.com') thebootstrapthemes.com
+    // The Bootstrap Image Gallery lightbox, should be a child element of the document body
+    #blueimp-gallery.blueimp-gallery.blueimp-gallery-controls
+      // The container for the modal slides
+      .slides
+      // Controls for the borderless lightbox
+      h3.title title
+      a.prev ‹
+      a.next ›
+      a.close ×
+      // The modal dialog, which will be used to wrap the lightbox content
+    // javascript
+    // jquery
+    script(src='assets/jquery.js')
+    // wow script
+    script(src='assets/wow/wow.min.js')
+    // slider
+    script(src='assets/slidingheader/classie.js')
+    // boostrap
+    script(src='assets/bootstrap/js/bootstrap.js', type='text/javascript')
+    // jquery mobile
+    script(src='assets/mobile/touchSwipe.min.js')
+    // jquery mobile
+    script(src='assets/respond/respond.js')
+    // gallery
+    script(src='assets/gallery/jquery.blueimp-gallery.min.js')
+    // custom script
+    script(src='assets/script.js')
 
-    // jQuery
-    script(src='stylesheets/js/jquery.js')
-    script(src='javascripts/homepageGeo.js')
-    
