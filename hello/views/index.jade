@@ -191,6 +191,30 @@ html
                       |                                     Remember Me
                 .col-md-6.forgot-pass-content
                   a.forgot-pass(href='javascription:void(0)') Forgot Password
+    section#SignUp.bg-primary
+      .container
+        .row
+          .col-lg-8.col-lg-offset-2
+            h2.section-heading Sign Up!
+            hr.light
+            #submitForm
+              .btn-group
+                p#collegeOption College
+                select#colleges.btn.btn-default
+                  option(value='college') Select Campus
+                  option(value='CSUF') CSUF
+              p#fnameText First Name: 
+              input#fname.form-control(type='text', placeholder='First Name')
+              p#lnameText Last Name: 
+              input#lname.form-control(type='text', placeholder='Last Name')
+              p#emailText Email: 
+              input#email.form-control(type='text', placeholder='Email must be .edu')
+              p#passwordText Password: 
+              input#password.form-control(type='password', name='Password', placeholder='Must be 8 characters, contain 1 digit & 1 letter')
+              p#repasswordText Retype-Password: 
+              input#passwordType.form-control(type='password', name='Password', placeholder='Must be 8 characters, contain 1 digit & 1 letter')
+              p#fillSection
+              input#signButton.btn.btn-default.btn-xl(type='button', name='button', value='submit')
   // Bootstrap Core JavaScript
   script(src='stylesheets/js/bootstrap.min.js')
   // Plugin JavaScript

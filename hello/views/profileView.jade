@@ -45,35 +45,7 @@ html(lang='en')
       }
       window.onload = getLocation;
     script(src='http://code.jquery.com/jquery-latest.min.js')
-    script.
-      var imageData = '';
-      function getImage()
-      {
-      var dir = "images/";
-      var fileextension = ".jpg";
-      var fileExt = {};
-      fileExt[0]=".png";
-      fileExt[1]=".jpg";
-      var dir = "images/";
-      $.ajax({
-      //This will retrieve the contents of the folder if the folder is configured as 'browsable'
-      url: 'uploads/',
-      success: function (data) {
-      //$("#row").html('');
-      //List all png or jpg or gif file names in the page
-      $(data).find("a:contains(" + fileExt[0] + "),a:contains(" + fileExt[1] + ")").each(function () {
-      var filename = this.href.replace(window.location.host, "").replace("http://", "");
-      console.log(filename);
-      filename = filename.replace("/myapp/","");
-      var path = dir+filename;
-      $("#row").append('<div class="col-sm-4 fadeInUp wowload"><div class="gallery-items">'+"<img class='img-responsive' src='"+path+ "'alt=item01'/>"+'<div class="caption"><h3>'+filename+'</h3> <a href="'+path+'" title="Digial Agency" class="gallery-image btn btn-default" data-gallery>View Details</a></div></div></div>');
-      // $("#row").append( "<img class='img-responsive' src='"+path+ "'alt=item01'/>");
-      // $("#row").append('<div class="caption"><h3>'+filename+'</h3> <a href="'+path+'" title="Digial Agency" class="gallery-image btn btn-default" data-gallery>View Details</a></div></div></div>');
-      });
-      }
-      });
-      }
-      getImage();
+    script(src='javascripts/homepageGeo.js')
     title Welcome2
     // Google fonts
     link(href='http://fonts.googleapis.com/css?family=Roboto:400,300,700', rel='stylesheet', type='text/css')
@@ -92,8 +64,7 @@ html(lang='en')
     link(rel='stylesheet', href='assets/style.css')
   body#home
     #container
-      header.intro(style='background-position:cen‌​ter;\
-      background-repeat:no-repeat;background-size: 100% 100%;')
+      header.intro(style='background-position:cen‌​ter;      background-repeat:no-repeat;background-size: 100% 100%;')
         .intro__content
           h1 Modex Creatives
           button.trigger
@@ -144,6 +115,11 @@ html(lang='en')
       a.next ›
       a.close ×
       // The modal dialog, which will be used to wrap the lightbox content
+    form(action='profile/upload', enctype='multipart/form-data', method='post')
+      input(multiple='multiple', name='upload', type='file')
+      br
+      br
+      input(type='submit', value='Upload')
     // javascript
     // jquery
     script(src='assets/jquery.js')
@@ -161,4 +137,5 @@ html(lang='en')
     script(src='assets/gallery/jquery.blueimp-gallery.min.js')
     // custom script
     script(src='assets/script.js')
+
 
