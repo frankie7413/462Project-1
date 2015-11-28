@@ -1,0 +1,4 @@
+db.getCollectionNames()
+db.createCollection("users")
+db.users.insert({"firstName": "Frank"},{"lastName : "thetank"},{"email":"test@csu.fullerton.edu"},{"college":"CSUF"},{"password":"123456aB"})
+db.users.insert({"firstName": "Frank","lastName : "thetank","email":"test@csu.fullerton.edu","college":"CSUF","password":"123456aB"})
