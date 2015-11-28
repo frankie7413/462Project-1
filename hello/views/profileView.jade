@@ -4,6 +4,7 @@ html(lang='en')
     meta(charset='UTF-8')
     meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+    script(src='http://code.jquery.com/jquery-latest.min.js')
     script.
       function getLocation() {
       if (navigator.geolocation) {
@@ -43,37 +44,76 @@ html(lang='en')
       break;
       }
       }
+      function hideMap(){
+      $('#intro').slideUp();
+      $('.navbar').fadeIn();
+      }
+      (function ($) {
+      $(document).ready(function(){
+      // hide .navbar first
+      $(".navbar").hide();
+      });
+      }(jQuery));
+      $(document).on('click','.navbar-collapse.in',function(e) {
+      if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
+      $(this).collapse('hide');
+      }
+      });
       window.onload = getLocation;
-    script(src='http://code.jquery.com/jquery-latest.min.js')
+    script(src='javascripts/homepageGeo.js')
     script.
-      var imageData = '';
-      function getImage()
-      {
-      var dir = "images/";
-      var fileextension = ".jpg";
-      var fileExt = {};
-      fileExt[0]=".png";
-      fileExt[1]=".jpg";
-      var dir = "images/";
-      $.ajax({
-      //This will retrieve the contents of the folder if the folder is configured as 'browsable'
-      url: 'uploads/',
-      success: function (data) {
-      //$("#row").html('');
-      //List all png or jpg or gif file names in the page
-      $(data).find("a:contains(" + fileExt[0] + "),a:contains(" + fileExt[1] + ")").each(function () {
-      var filename = this.href.replace(window.location.host, "").replace("http://", "");
-      console.log(filename);
-      filename = filename.replace("/myapp/","");
-      var path = dir+filename;
-      $("#row").append('<div class="col-sm-4 fadeInUp wowload"><div class="gallery-items">'+"<img class='img-responsive' src='"+path+ "'alt=item01'/>"+'<div class="caption"><h3>'+filename+'</h3> <a href="'+path+'" title="Digial Agency" class="gallery-image btn btn-default" data-gallery>View Details</a></div></div></div>');
-      // $("#row").append( "<img class='img-responsive' src='"+path+ "'alt=item01'/>");
-      // $("#row").append('<div class="caption"><h3>'+filename+'</h3> <a href="'+path+'" title="Digial Agency" class="gallery-image btn btn-default" data-gallery>View Details</a></div></div></div>');
+      $(".navbar-nav li a").click(function(event) {
+      $(".navbar-collapse").collapse('hide');
       });
+      function showLightbox(){
+      document.getElementById('light').style.display='block';
+      document.getElementById('fade').style.display='block';
+      document.getElementById('files').addEventListener('change', handleFileSelect, false);
       }
-      });
+      function cancelUpload(){
+      document.getElementById('light').style.display='none';
+      document.getElementById('fade').style.display='none';
       }
-      getImage();
+      function handleFileSelect(evt) {
+      var files = evt.target.files; // FileList object
+      document.getElementById("js-upload-submit").disabled = false;
+      // files is a FileList of File objects. List some properties.
+      var output = [];
+      for (var i = 0, f; f = files[i]; i++) {
+      if(f.size > 20971520){
+      output.push("<strong>File size too large</strong>");
+      document.getElementById("js-upload-submit").disabled = true;
+      }
+      }
+      document.getElementById('sizeError').innerHTML = '<ul>' + output.join('') + '</ul>';
+      }
+    style.
+      .black_overlay{
+      display: none;
+      position: absolute;
+      top: 0%;
+      left: 0%;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      z-index:1001;
+      -moz-opacity: 0.8;
+      opacity:.80;
+      filter: alpha(opacity=80);
+      }
+      .white_content {
+      display: none;
+      position: fixed;
+      width:80%;
+      height: 100%;
+      padding: 10px;
+      z-index:1002;
+      overflow: auto;
+      margin-left: auto ;
+      margin-right: auto ;
+      max-width:600px;
+      margin-top:40px;
+      }
     title Welcome2
     // Google fonts
     link(href='http://fonts.googleapis.com/css?family=Roboto:400,300,700', rel='stylesheet', type='text/css')
@@ -92,11 +132,10 @@ html(lang='en')
     link(rel='stylesheet', href='assets/style.css')
   body#home
     #container
-      header.intro(style='background-position:cen‌​ter;\
-      background-repeat:no-repeat;background-size: 100% 100%;')
+      header#intro.intro(style='background-position:cen‌​ter;      background-repeat:no-repeat;background-size: 100% 100%;')
         .intro__content
           h1 Modex Creatives
-          button.trigger
+          button.trigger(onclick='hideMap();')
             svg(width='100%', height='100%', viewbox='0 0 60 60', preserveaspectratio='none')
               g.icon.icon--grid
                 rect(x='32.5', y='5.5', width='22', height='22')
@@ -109,6 +148,63 @@ html(lang='en')
             span View content
         // /intro__content
       // /intro
+      // Navigation
+      nav#navbar.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+        .container
+          // Brand and toggle get grouped for better mobile display
+          .navbar-header
+            button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.navbar-brand(href='#')
+              img(style='margin-top: -3px;', src='http://placehold.it/150x35&text=Logo', alt='')
+          // Collect the nav links, forms, and other content for toggling
+          #bs-example-navbar-collapse-1.collapse.navbar-collapse
+            ul.nav.navbar-nav
+              li
+                a(href='#') About
+              li
+                a(href='#') Services
+              li
+                a.dropdown-toggle(href='#', data-target='.nav-collapse') Contact
+              li.dropdown
+                a(data-toggle='dropdown', href='#')
+                  | Upload
+                  span.caret
+                ul.dropdown-menu(data-toggle='collapse', data-target='.nav-collapse')
+                  li(data-toggle='collapse', data-target='.navbar-collapse.in')
+                    a(href='#', onclick='showLightbox();') Image/Video
+                  li
+                    a(href='#') Text
+          // /.navbar-collapse
+        // /.container
+      // Upload Media
+      #light.white_content
+        .container
+          .panel.panel-default
+            .panel-heading
+              strong Upload Media
+            .panel-body
+              // Standar Form
+              h4 Select files from your device
+              br
+              form#js-upload-form(action='profile/upload', method='post', enctype='multipart/form-data')
+                .form-inline
+                  .form-group
+                    input#files(multiple='multiple', name='files[]', type='file')
+                  button#js-upload-submit.btn.btn-sm.btn-primary(type='submit', value='Upload') Upload Media
+                  small  20 mb file size limit 
+                  output#sizeError
+                br
+                button.btn.btn-danger(type='button', onclick='cancelUpload();') Cancel
+              br
+          // /Upload Media
+        // /container
+        a(href='javascript:void(0)', onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'")
+      #fade.black_overlay
+      // /overlay
       section.items-wrap
         .container
           .spacer
@@ -144,6 +240,11 @@ html(lang='en')
       a.next ›
       a.close ×
       // The modal dialog, which will be used to wrap the lightbox content
+    form(action='profile/upload', enctype='multipart/form-data', method='post')
+      input(multiple='multiple', name='upload', type='file')
+      br
+      br
+      input(type='submit', value='Upload')
     // javascript
     // jquery
     script(src='assets/jquery.js')
@@ -161,4 +262,3 @@ html(lang='en')
     script(src='assets/gallery/jquery.blueimp-gallery.min.js')
     // custom script
     script(src='assets/script.js')
-

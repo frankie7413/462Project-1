@@ -70,7 +70,75 @@ router.post('/signup', passport.authenticate('local-signup', {
     failureFlash : true // allow flash messages
 }));
 
+// process the signup form
+router.post('/resetPass', function (req, res){
+var check = req.body;
+// var resetPass = User({
+// 
+// 		email        : check.Email,
+//         password     : '123456aB',
+//         firstName    : 'dude',
+//         lastName     : 'dudu',
+//         secretAnswer : 'ddd',
+//         secretQuestion: 'dee',
+//         occupation	 : 'dee',
+//         verify       : 'dee'
+// 
+// });
 
+console.log(check.email+"F");
+
+ User.findOne({ 'local.email' :  check.email, 'local.secretAnswer' : check.secretAnswer }, function(err, user) {
+            // if there are any errors, return the error
+            if (err)
+                console.log(err);
+
+            // check to see if theres already a user with that email
+            if (user) {
+    					updatePassword(user,check);
+            } else {
+					 console.log("Not found");
+            }
+		
+        });    
+
+
+
+});
+
+function updatePassword(user,check){
+console.log(check.password);
+var newUser = User();
+var pass = newUser.generateHash(check.password);
+console.log(newUser.generateHash(check.password));
+	User.update({'local.email' :  check.email}, {$set:{'local.password' : pass}}, function(err, result) {
+    if (err)
+        //do something.
+        console.log("errorrrrr");
+});;
+      		
+
+
+
+} 
+
+function saveUser(user,check){
+
+   var temp = new User();
+      temp = user;
+      temp.password = check.password;
+      console.log(temp);
+      
+      
+		temp.save(function(err,temp) {
+                    if (err){
+                        console.log("ERRR"+temp);
+                        }
+                    
+                });
+
+
+}
 //@route GET /Recovery will genrate recovery page
 //will have user to enter email to send email to account 
 //enter valid email 

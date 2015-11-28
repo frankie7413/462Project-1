@@ -1,5 +1,7 @@
 var main = function() {
-	var college,
+	var secretAnswer,
+		occupation,
+		secretQuestion,
 		fname,
 		lname,
 		email,
@@ -23,7 +25,7 @@ var main = function() {
 		} else {
 			console.log('Inputs are complete');
 			//PostInformation();
-			regInfo = {'firstName': fname, 'lastName': lname, 'email': email, 'college': college, 'password': password};
+			regInfo = {'firstName': fname, 'lastName': lname, 'email': email, 'secretAnswer': secretAnswer, 'secretQuestion': secretQuestion, 'password': password, 'occupation':occupation, 'vip':'0'};
 
 			$.post("/signUp", regInfo, function(data){
 				//PostInformation(data);
@@ -77,28 +79,13 @@ var main = function() {
 		}
 	}
 
-	//going to suppy information to sql server 
-	//check to see if information send is correctly formmatted. 
-	function PostInformation (data) {
-		console.log('suppose to empty');
-		$('#submitForm').empty();
-		$('#submitForm').append($('<p class="text-center">').text('Your infomation that you entered:'));
-
-		$content = $('<ul class="text-center">');
-		$content.append($('<li>').text('College: ' + data.College));
-		$content.append($('<li>').text('First Name '+ data.FirstName));
-		$content.append($('<li>').text('Last Name: '+ data.LastName));
-		$content.append($('<li>').text('Email: '+ data.Email));
-		//$content.append($('<li>').text('password: '+ data.Password));
-
-		$('#submitForm').append($content);
-	}
+	
 
 
 	//http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
 	function validateEmail(email) {
     	//var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-    	var re = /^([\w-]+(?:\.[\w-]+)*)@csu.fullerton\.edu/i;
+    	var re = /^([\w-]+(?:\.[\w-]+)*)/i;
     	return re.test(email);
 	}
 
@@ -151,7 +138,16 @@ var main = function() {
 		}
 		return true;
 	}
-
+	
+	function validateSecretAnswer(secretAnswer){
+		console.log(secretAnswer);
+		
+		if(/^[a-zA-Z0-9- ]*$/.test(secretAnswer) == false || /\s/.test(secretAnswer) ||secretAnswer.length < 4) {
+    			return false;
+    			
+		}
+		return true;
+	}
 	$('#logButton').click(function(){
 		missingField = true;
 	logEmail = $('#logEmail').val();
@@ -205,16 +201,27 @@ var main = function() {
 
 		missingField = true;
 
-		if($('#colleges').val() === 'college'){
+		if($('#secretAnswer').val() === ''){
 			missingField = false;
-			$('#collegeOption').empty();
-			$('#collegeOption').append('College*');
+			$('#secretAnswerText').empty();
+			$('#secretAnswerText').append('Secret Question*');
 		}else{
-			college = $('#colleges').val();
-			$('#collegeOption').empty();
-			$('#collegeOption').append('College');
+				secretAnswer = $('#secretAnswer').val();
+			if(validateSecretAnswer(secretAnswer)){
+				secretQuestion = $('#secretAnswerList').val();
+				console.log(secretQuestion);
+				$('#secretAnswerText').empty();
+				$('#secretAnswerText').append('Secret Question');
+				$('#secretAnswer').empty();
+				$('#secretAnswer').append("One word only, must be at least 4 characters");
+			}
+			else{
+				missingField = false;
+				$('#secretAnswerText').empty();
+				$('#secretAnswerText').append('Secret Question*');
+			}
 		}
-
+		
 		if($('#fname').val() === ''){
 			missingField = false;
 			$('#fnameText').empty();
@@ -271,10 +278,173 @@ var main = function() {
 			passwordType = $('#passwordType').val();
 			checkPassword(passwordType); 
 		}
+		occupation = $('#occupation').val();
+		SectionmissingField(missingField);
+
+	});
+	$('#vipsignButton').click(function(){
+
+		missingField = true;
+
+		if($('#secretAnswer1').val() === ''){
+			missingField = false;
+			$('#secretAnswerText1').empty();
+			$('#secretAnswerText1').append('Secret Question*');
+		}else{
+				secretAnswer = $('#secretAnswer1').val();
+			if(validateSecretAnswer(secretAnswer)){
+				secretQuestion = $('#secretAnswerList1').val();
+				console.log(secretQuestion);
+				$('#secretAnswerText1').empty();
+				$('#secretAnswerText1').append('Secret Question');
+				$('#secretAnswer1').empty();
+				$('#secretAnswer1').append("One word only, must be at least 4 characters");
+			}
+			else{
+				missingField = false;
+				$('#secretAnswerText1').empty();
+				$('#secretAnswerText1').append('Secret Question*');
+			}
+		}
+		
+		if($('#fname1').val() === ''){
+			missingField = false;
+			$('#fnameText1').empty();
+			$('#fnameText1').append('First Name:*');
+		}else {
+			fname = $('#fname1').val();
+			$('#fnameText1').empty();
+			$('#fnameText1').append('First Name:');
+		}
+
+		if($('#lname1').val() === ''){
+			missingField = false;
+			$('#lnameText1').empty();
+			$('#lnameText1').append('Last Name:*');
+		}else {
+			lname = $('#lname1').val();
+			$('#lnameText1').empty();
+			$('#lnameText1').append('Last Name:');
+		}
+
+		if($('#email1').val() === ''){
+			missingField = false;
+			$('#emailText1').empty();
+			$('#emailText1').append('Email:*');
+		}else {
+			email = $('#email1').val();
+			if(validateEmail(email)){
+				$('#emailText1').empty();
+				$('#emailText1').append('Email: ');
+				console.log(email);
+				console.log('valid email');
+			} else {
+				missingField = false;
+				$('#emailText1').empty();
+				$('#emailText1').append('Email:* Enter Valid Email');
+			}
+		}
+
+		if($('#password1').val() === ''){
+			missingField = false;
+			$('#passwordText1').empty();
+			$('#passwordText1').append('Password:*');
+		}else {
+			password = $('#password1').val();
+			$('#passwordText1').empty();
+			$('#passwordText1').append('Password:');
+		}
+
+		if($('#passwordType1').val() === ''){
+			missingField = false;
+			$('#repasswordText1').empty();
+			$('#repasswordText1').append('Retype-Password*');
+		}else {
+			passwordType = $('#passwordType1').val();
+			checkPassword(passwordType); 
+		}
+			
+			if($('#occupation').val() === ''){
+			missingField = false;
+			$('#occupationText').empty();
+			$('#occupationText').append('Occupation *');
+		}else {
+			occupation = $('#occupation').val();
+			$('#occupationText').empty();
+			$('#occupationText').append('Occupation');
+		}
+		
 
 		SectionmissingField(missingField);
 
 	});
+	
+	$('#forgotPassword').click(function(){
+		var forgotsecretAnswer;
+		var tempEmail;
+		var passFail =true;
+		var newpass;
+		console.log($('#forgotemail').val());
+		if($('#forgotemail').val() === ''){
+			
+			$('#forgotemailText').empty();
+			$('#forgotemailText').append('Email:*');
+		}else {
+			tempEmail = $('#forgotemail').val();
+			if(validateEmail(tempEmail)){
+				
+				$('#forgotemailText').empty();
+				$('#forgotemailText').append('Email: ');
+				console.log(tempEmail);
+				console.log('valid email');
+			} else {
+				
+				$('#forgotemailText').empty();
+				$('#forgotemailText').append('Email:* Enter Valid Email');
+			}
+		}
+	if($('#forgotsecretAnswer').val() === ''){
+			passFail = false;
+			$('#forgotsecretAnswerText').empty();
+			$('#forgotsecretAnswerText').append('Secret Question *');
+		}else {
+			forgotsecretAnswer = $('#forgotsecretAnswer').val();
+			$('#forgotsecretAnswerText').empty();
+			$('#forgotsecretAnswerText').append('Secret Question');
+		}
+		
+		if($('#forgotnewpassword').val() === ''){
+			passFail = false;
+			$('#forgotnewpasswordText').empty();
+			$('#forgotnewpasswordText').append('Retype-Password:*');
+		}else {
+				 newpass = $('#forgotnewpassword').val();
+			//checkPassword(newpass); 
+		}
+		
+		
+		if(validatePassword(newpass) && passFail){
+		
+		
+		forgotnewpassword
+		console.log(newpass + forgotsecretAnswer)
+		
+		var passInfo = {'email': tempEmail, 'secretAnswer': forgotsecretAnswer, 'password':newpass}; 
+		$.post("/resetPass", passInfo, function(data){
+				//PostInformation(data);
+				// console.log('/signup called');
+				window.location = 'index';
+			});
+			}
+			else{
+
+				$('#forgotnewpasswordText').empty();
+				$('#forgotnewpasswordText').append('Retype-Password:*');
+				console.log("Error");
+			
+			}
+	});
+	
 };
 
 $(document).ready(main);
