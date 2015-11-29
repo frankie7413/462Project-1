@@ -4,6 +4,7 @@ var router = express.Router();
 var User = require('../models/User');
 var Location = require('../models/Location');
 var ImageLocation = require('../models/imageLocation');
+var textMessage = require('../models/textMessage');
 var formidable = require('formidable'),
     util = require('util'),
     fs   = require('fs-extra'),
@@ -11,6 +12,8 @@ var formidable = require('formidable'),
     file = require('fs');
 var LOC;
 var loggedIn = false;
+var dir;
+var USERNAME, USER;
 
 // =====================================
 // PROFILE SECTION =====================
@@ -21,12 +24,14 @@ var loggedIn = false;
 // res.render('unverifiedView',{fname: user.firstName, lname: user.lastName, university: user.college, email: user.email, verify: user.verify});
 router.get('/', isLoggedIn, function(req, res, next) {
 	var userInfo = req.user;
+	username = userInfo.local.email;
+	USER = userInfo;
 	res.render('profileView',{
 		fname: userInfo.local.firstName, 
 		lname: userInfo.local.lastName,
 		university: userInfo.local.college, 
 		email: userInfo.local.email, 
-		verify: userInfo.local.verify});
+		vip: userInfo.local.vip});
 });
 
 //route middleware to make sure a user is logged in
@@ -74,19 +79,60 @@ router.post('/upload', function (req, res){
 		//saveLocation(LOC.username,LOC.city);
 		//res.json(getLocation);
 		});
-    var new_location = 'uploads/';
+   // var new_location = 'uploads/';
 	
-    fs.copy(temp_path, new_location + file_name, function(err) {  
+    fs.copy(temp_path, dir + file_name, function(err) {  
       if (err) {
         console.error(err);
       } else {
-        console.log("success!")
+        console.log("success!");
       }
     });
   });
 });
 
 
+router.post('/uploadText', function (req, res){
+var form = new formidable.IncomingForm();
+  form.parse(req, function(err, fields, files) {
+    res.redirect('/profile');
+  });
+  console.log(req.body);
+  var message = req.body;
+  console.log(USER);
+  if(message.alert == 'Y' && USER.vip != 'Y'){
+        message.alert = 'N';
+  }
+  
+  var temp = "";
+  var text  = textMessage({
+                text: message.message,
+                username: USER.local.email,
+                alert: message.alert  
+  });
+  
+  text.save(function(err,temp){
+		console.log(temp);
+		if(err) return console.error(err);
+		//saveLocation(LOC.username,LOC.city);
+		res.redirect('/profile');
+		
+		});
+  
+});
+
+
+router.post('/getText', function (req, res){
+ // console.log(req.body);
+ console.log("getttt");
+  textMessage.find(function(err, data){
+			console.log(data);
+			if(err) return console.error(err);
+			
+			res.json(data);
+			});
+
+});
 router.post('/Location', function(req, res, next) {
 	var temp = req.body;
 	var repeat = false;
@@ -97,19 +143,20 @@ router.post('/Location', function(req, res, next) {
 		temp.city = temp.city.replace(/ /g, '_');
 		if (LOC === undefined || LOC === null) {
     		LOC = temp;
+    		LOC.username = USERNAME;
     		console.log(LOC.city);
 		}
-		else if(LOC.city == temp.city && LOC.username == temp.username){
+		else if(LOC.city == temp.city && LOC.username == USERNAME){
 			repeat = true;
 			console.log("repeat");
 		}
 
-		if(!repeat){
-		var dir = 'uploads/' + LOC.city;
+		if(true){
+			dir = 'uploads/' + LOC.city+"/";
 
-if (!fs.existsSync(dir)){
-    fs.mkdirSync(dir);
-}
+		if (!fs.existsSync(dir)){
+    		fs.mkdirSync(dir);
+		}
 			console.log("!repeat");
 			var getLocation = Location({
 						username: LOC.username,
@@ -121,18 +168,24 @@ if (!fs.existsSync(dir)){
 			if(err) return console.error(err);
 			//saveLocation(LOC.username,LOC.city);
 			console.log("User Location done");
-				//res.json(getLocation);
+			getLocations(req,res,next,getLocation);
+				//res.json(dir);
 			});
 		
-			Location.distinct("location",{username:"frankthetank"}, function(err, getLocation){
-			console.log(getLocation);
-			if(err) return console.error(err);
-			console.log("User Location done");
-			res.json(getLocation);
-			});
+			
      	}
      
      }
 });
 
+function getLocations(req,res,next,getLocation){
+Location.distinct("location",{username:LOC.username}, function(err, getLocation){
+			console.log(getLocation);
+			if(err) return console.error(err);
+			console.log("User Location done");
+			res.json(getLocation);
+			});
+
+
+}
 module.exports = router;

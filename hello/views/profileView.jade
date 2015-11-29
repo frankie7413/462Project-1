@@ -1,21 +1,518 @@
 doctype html
 html(lang='en')
   head
-    meta(charset='utf-8')
-    meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-    meta(name='description', content='')
-    meta(name='author', content='')
-    title Dope - Home
-    
-  body#page-top
+    meta(charset='UTF-8')
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+    script(src='http://code.jquery.com/jquery-latest.min.js')
+    script.
+      function getLocation() {
+      if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+      x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+      }
+      function showPosition(position) {
+      var latlon = position.coords.latitude + "," + position.coords.longitude;
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      var scale = 2
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+      scale = 1
+      }
+      var img_url = "http://maps.googleapis.com/maps/api/staticmap?center="
+      +latlon+"&markers="+latlon+"&zoom=13&size="+w+"x"+h+"&scale="+scale+"&key=AIzaSyA9obqVtqZ5v5VyIcCxQ2GUUM8wSur5Qk8&sensor=false";
+      console.log(img_url + "GGGG")
+      //document.getElementById("introLoader").style.class = "test";
+      var c = document.getElementsByClassName("intro");
+      c[0].style.backgroundImage="url('"+img_url+"')";
+      }
+      function showError(error) {
+      switch(error.code) {
+      case error.PERMISSION_DENIED:
+      x.innerHTML = "User denied the request for Geolocation."
+      break;
+      case error.POSITION_UNAVAILABLE:
+      x.innerHTML = "Location information is unavailable."
+      break;
+      case error.TIMEOUT:
+      x.innerHTML = "The request to get user location timed out."
+      break;
+      case error.UNKNOWN_ERROR:
+      x.innerHTML = "An unknown error occurred."
+      break;
+      }
+      }
+      function hideMap(){
+      $('#intro').slideUp();
+      $('.navbar').fadeIn();
+      }
+      (function ($) {
+      $(document).ready(function(){
+      // hide .navbar first
+      $(".navbar").hide();
+      });
+      }(jQuery));
+      $(document).on('click','.navbar-collapse.in',function(e) {
+      if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
+      $(this).collapse('hide');
+      }
+      });
+      function textCounter(field,cnt, maxlimit) {
+      var cntfield = document.getElementById(cnt)
+      if (field.value.length > maxlimit) // if too long...trim it!
+      field.value = field.value.substring(0, maxlimit);
+      // otherwise, update 'characters left' counter
+      else
+      cntfield.value = maxlimit - field.value.length;
+      }
+      window.onload = getLocation;
+    script(src='javascripts/homepageGeo.js')
+    script.
+      $(".navbar-nav li a").click(function(event) {
+      $(".navbar-collapse").collapse('hide');
+      });
+      function showLightbox(){
+      document.getElementById('light').style.display='block';
+      document.getElementById('fade').style.display='block';
+      document.getElementById('files').addEventListener('change', handleFileSelect, false);
+      }
+      function showTextbox(){
+      document.getElementById('lightText').style.display='block';
+      document.getElementById('fade').style.display='block';
+      }
+      function cancelUpload(){
+      document.getElementById('light').style.display='none';
+      document.getElementById('fade').style.display='none';
+      }
+      function cancelText(){
+      document.getElementById('lightText').style.display='none';
+      document.getElementById('fade').style.display='none';
+      }
+      function submitText(){
+      document.getElementById('lightText').style.display='none';
+      document.getElementById('fade').style.display='none';
+      var text = document.getElementById('q17').value;
+      console.log("lol"+text);
+      var loc = {"message": text, "username": "frankthetank","alert":"N"};
+      $.post("profile/uploadText", loc, function(data){
+      console.log(data);
+      location.reload();
+      //getImage(data);
+      });
+      }
+      function handleFileSelect(evt) {
+      var files = evt.target.files; // FileList object
+      document.getElementById("js-upload-submit").disabled = false;
+      // files is a FileList of File objects. List some properties.
+      var output = [];
+      for (var i = 0, f; f = files[i]; i++) {
+      if(f.size > 20971520){
+      output.push("<strong>File size too large</strong>");
+      document.getElementById("js-upload-submit").disabled = true;
+      }
+      }
+      document.getElementById('sizeError').innerHTML = '<ul>' + output.join('') + '</ul>';
+      }
+    style.
+      .black_overlay{
+      display: none;
+      position: absolute;
+      top: 0%;
+      left: 0%;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      z-index:10;
+      -moz-opacity: 0.8;
+      opacity:.80;
+      filter: alpha(opacity=80);
+      }
+      .white_content {
+      display: none;
+      position: fixed;
+      width:80%;
+      height: 100%;
+      padding: 10px;
+      z-index:1002;
+      overflow: auto;
+      margin-left: auto ;
+      margin-right: auto ;
+      max-width:600px;
+      margin-top:40px;
+      }
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+      <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+      <script>
+      function getLocation() {
+      if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+      x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+      }
+      function showPosition(position) {
+      var latlon = position.coords.latitude + "," + position.coords.longitude;
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      var scale = 2
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+      scale = 1
+      }
+      var img_url = "http://maps.googleapis.com/maps/api/staticmap?center="
+      +latlon+"&markers="+latlon+"&zoom=13&size="+w+"x"+h+"&scale="+scale+"&key=AIzaSyA9obqVtqZ5v5VyIcCxQ2GUUM8wSur5Qk8&sensor=false";
+      console.log(img_url + "GGGG")
+      //document.getElementById("introLoader").style.class = "test";
+      var c = document.getElementsByClassName("intro");
+      c[0].style.backgroundImage="url('"+img_url+"')";
+      }
+      function showError(error) {
+      switch(error.code) {
+      case error.PERMISSION_DENIED:
+      x.innerHTML = "User denied the request for Geolocation."
+      break;
+      case error.POSITION_UNAVAILABLE:
+      x.innerHTML = "Location information is unavailable."
+      break;
+      case error.TIMEOUT:
+      x.innerHTML = "The request to get user location timed out."
+      break;
+      case error.UNKNOWN_ERROR:
+      x.innerHTML = "An unknown error occurred."
+      break;
+      }
+      }
+      function hideMap(){
+      $('#intro').slideUp();
+      $('.navbar').fadeIn();
+      }
+      (function ($) {
+      $(document).ready(function(){
+      // hide .navbar first
+      $(".navbar").hide();
+      });
+      }(jQuery));
+      $(document).on('click','.navbar-collapse.in',function(e) {
+      if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
+      $(this).collapse('hide');
+      }
+      });
+      function textCounter(field,cnt, maxlimit) {
+      var cntfield = document.getElementById(cnt)
+      if (field.value.length > maxlimit) // if too long...trim it!
+      field.value = field.value.substring(0, maxlimit);
+      // otherwise, update 'characters left' counter
+      else
+      cntfield.value = maxlimit - field.value.length;
+      }
+      window.onload = getLocation;
+      </script>
+      <script src="javascripts/homepageGeo.js"></script>
+      <script>
+      $(".navbar-nav li a").click(function(event) {
+      $(".navbar-collapse").collapse('hide');
+      });
+      function showLightbox(){
+      document.getElementById('light').style.display='block';
+      document.getElementById('fade').style.display='block';
+      document.getElementById('files').addEventListener('change', handleFileSelect, false);
+      }
+      function showTextbox(){
+      document.getElementById('lightText').style.display='block';
+      document.getElementById('fade').style.display='block';
+      }
+      function cancelUpload(){
+      document.getElementById('light').style.display='none';
+      document.getElementById('fade').style.display='none';
+      }
+      function cancelText(){
+      document.getElementById('lightText').style.display='none';
+      document.getElementById('fade').style.display='none';
+      }
+      function submitText(){
+      document.getElementById('lightText').style.display='none';
+      document.getElementById('fade').style.display='none';
+      var text = document.getElementById('q17').value;
+      console.log("lol"+text);
+      var loc = {"message": text, "username": "frankthetank","alert":"N"};
+      $.post("profile/uploadText", loc, function(data){
+      console.log(data);
+      location.reload();
+      //getImage(data);
+      });
+      }
+      function handleFileSelect(evt) {
+      var files = evt.target.files; // FileList object
+      document.getElementById("js-upload-submit").disabled = false;
+      // files is a FileList of File objects. List some properties.
+      var output = [];
+      for (var i = 0, f; f = files[i]; i++) {
+      if(f.size > 20971520){
+      output.push("<strong>File size too large</strong>");
+      document.getElementById("js-upload-submit").disabled = true;
+      }
+      }
+      document.getElementById('sizeError').innerHTML = '<ul>' + output.join('') + '</ul>';
+      }
+      </script>
+      <style>
+      .black_overlay{
+      display: none;
+      position: absolute;
+      top: 0%;
+      left: 0%;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      z-index:10;
+      -moz-opacity: 0.8;
+      opacity:.80;
+      filter: alpha(opacity=80);
+      }
+      .white_content {
+      display: none;
+      position: fixed;
+      width:80%;
+      height: 100%;
+      padding: 10px;
+      z-index:1002;
+      overflow: auto;
+      margin-left: auto ;
+      margin-right: auto ;
+      max-width:600px;
+      margin-top:40px;
+      }
+      .linha{
+      width:auto;
+      padding:5px;
+      height:auto;
+      display:table;
+      }
+      .tile{
+      height:120px;
+      width:230px;
+      float:left;
+      margin:0 5px 0 0;
+      padding:2px;
+      text-align:center;
+      vertical-align: middle;
+      border: 1px solid black;
+      }
+      .tileLarge{
+      width:310px;
+      height:210px;
+      }
+      .tileSmall{
+      width:130px;
+      height:90px;
+      }
+      .white{
+      background:#fff;
+      }
+      .vermelho{
+      background:#CD0000;
+      }
+      .azul{
+      background:#4682B4;
+      }
+      .verde{
+      background-color: #2E8B57;
+      }
+      .wordwrap {
+      white-space: pre-wrap;      /* CSS3 */
+      white-space: -moz-pre-wrap; /* Firefox */
+      white-space: -pre-wrap;     /* Opera <7 */
+      white-space: -o-pre-wrap;   /* Opera 7 */
+      word-wrap: break-word;      /* IE */
+      }
+      </st
+    title Welcome2
+    // Google fonts
+    link(href='http://fonts.googleapis.com/css?family=Roboto:400,300,700', rel='stylesheet', type='text/css')
+    // font awesome
+    link(href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', rel='stylesheet')
+    // bootstrap
+    link(rel='stylesheet', href='assets/bootstrap/css/bootstrap.min.css')
+    // animate.css
+    link(rel='stylesheet', href='assets/animate/animate.css')
+    // gallery
+    link(rel='stylesheet', href='assets/gallery/blueimp-gallery.min.css')
+    // favicon
+    link(rel='shortcut icon', href='images/favicon.png', type='image/x-icon')
+    link(rel='icon', href='images/favicon.png', type='image/x-icon')
+    link(rel='stylesheet', type='text/css', href='assets/slidingheader/layout-simple.css')
+    link(rel='stylesheet', href='assets/style.css')
+  body#home
+    #container
+      header#intro.intro(style='background-position:cen‌​ter;      background-repeat:no-repeat;background-size: 100% 100%;')
+        .intro__content
+          h1 Welcome2
+          button.trigger(onclick='hideMap();')
+            svg(width='100%', height='100%', viewbox='0 0 60 60', preserveaspectratio='none')
+              g.icon.icon--grid
+                rect(x='32.5', y='5.5', width='22', height='22')
+                rect(x='4.5', y='5.5', width='22', height='22')
+                rect(x='32.5', y='33.5', width='22', height='22')
+                rect(x='4.5', y='33.5', width='22', height='22')
+              g.icon.icon--cross
+                line(x1='4.5', y1='55.5', x2='54.953', y2='5.046')
+                line(x1='54.953', y1='55.5', x2='4.5', y2='5.047')
+            span View content
+        // /intro__content
+      // /intro
+      // Navigation
+      nav#navbar.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+        .container
+          // Brand and toggle get grouped for better mobile display
+          .navbar-header
+            button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.navbar-brand(href='#')
+              img(style='margin-top: -3px;', src='http://placehold.it/150x35&text=Logo', alt='')
+          // Collect the nav links, forms, and other content for toggling
+          #bs-example-navbar-collapse-1.collapse.navbar-collapse
+            ul.nav.navbar-nav
+              li
+                a(href='#') About
+              li
+                a(href='#') Services
+              li
+                a.dropdown-toggle(href='#', data-target='.nav-collapse') Contact
+              li.dropdown
+                a(data-toggle='dropdown', href='#')
+                  | Upload
+                  span.caret
+                ul.dropdown-menu(data-toggle='collapse', data-target='.nav-collapse')
+                  li(data-toggle='collapse', data-target='.navbar-collapse.in')
+                    a(href='#', onclick='showLightbox();') Image/Video
+                  li(data-toggle='collapse', data-target='.navbar-collapse.in')
+                    a(href='#', onclick='showTextbox();') Text
+          // /.navbar-collapse
+        // /.container
+      section
+      section
+        .container(style='padding-top:5%;')
+          .spacer
+            .filler
+              #text.text
+      // text input
+      #lightText.white_content
+        .container
+          .panel.panel-default
+            .panel-heading
+              strong Upload Text
+            .panel-body
+              // Standar Form
+              h4
+                input#q17length(style='color:red;font-size:12pt;', readonly='', type='text', name='q17length', size='3', maxlength='3', value='270')
+                |  characters left
+              br
+              textarea#q17.scanwid(onkeydown='textCounter(this,270);', onkeyup="textCounter(this,'q17length' ,270)", name='q17', rows='5', cols='', style='width:60%')
+            button.btn.btn-danger(type='button', onclick='cancelText();', style='margin-right: 20px') Cancel
+            button.btn.btn-success(type='submit', onclick='submitText();') Upload
+          // /text input
+        // /container
+        a(href='javascript:void(0)', onclick="document.getElementById('lightText').style.display='none';document.getElementById('fade').style.display='none'")
+      #alert innn9522222222555555nnttttooo
+      // Upload Media
+      #light.white_content
+        .container
+          .panel.panel-default
+            .panel-heading
+              strong Upload Media
+            .panel-body
+              // Standar Form
+              h4 Select files from your device
+              br
+              form#js-upload-form(action='profile/upload', method='post', enctype='multipart/form-data')
+                .form-inline
+                  .form-group
+                    input#files(multiple='multiple', name='files[]', type='file')
+                  button#js-upload-submit.btn.btn-sm.btn-primary(type='submit', value='Upload') Upload Media
+                  small  20 mb file size limit 
+                  output#sizeError
+                br
+                button.btn.btn-danger(type='button', onclick='cancelUpload();') Cancel
+              br
+          // /Upload Media
+        // /container
+        a(href='javascript:void(0)', onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'")
+      #fade.black_overlay
+      // /overlay
+      section.items-wrap
+        .container
+          .spacer
+            #row.row
+    // /container
+    .about
+      .overlay.spacer.text-center
+        .container
+          h2
+            | Hellow! We are 
+            b Modex Creatives
+          p
+            | Creative digital agency for sleek and sophisticated solutions for mobile, websites and software designs, lead by passionate and uber progressive team that lives and breathes design. Creative digital agency for sleek and sophisticated solutions for mobile, websites and software designs.
+          .wowload.fadeInUp.social
+            a(href='#')
+              i.fa.fa-facebook.fa-2x
+            a(href='#')
+              i.fa.fa-instagram.fa-2x
+            a(href='#')
+              i.fa.fa-twitter.fa-2x
+            a(href='#')
+              i.fa.fa-flickr.fa-2x
+    .text-center.copyright
+      | Powered by 
+      a(href='http://thebootstrapthemes.com') thebootstrapthemes.com
+    // The Bootstrap Image Gallery lightbox, should be a child element of the document body
+    #blueimp-gallery.blueimp-gallery.blueimp-gallery-controls
+      // The container for the modal slides
+      .slides
+      // Controls for the borderless lightbox
+      h3.title title
+      a.prev ‹
+      a.next ›
+      a.close ×
+      // The modal dialog, which will be used to wrap the lightbox content
     form(action='profile/upload', enctype='multipart/form-data', method='post')
       input(multiple='multiple', name='upload', type='file')
       br
       br
       input(type='submit', value='Upload')
+    // javascript
+    // jquery
+    script(src='assets/jquery.js')
+    // wow script
+    script(src='assets/wow/wow.min.js')
+    // slider
+    script(src='assets/slidingheader/classie.js')
+    // boostrap
+    script(src='assets/bootstrap/js/bootstrap.js', type='text/javascript')
+    // jquery mobile
+    script(src='assets/mobile/touchSwipe.min.js')
+    // jquery mobile
+    script(src='assets/respond/respond.js')
+    // gallery
+    script(src='assets/gallery/jquery.blueimp-gallery.min.js')
+    // custom script
+    script(src='assets/script.js')
+// Google fonts
+// font awesome
+// bootstrap
+// animate.css
+// gallery
+// favicon
 
-    // jQuery
-    script(src='stylesheets/js/jquery.js')
-    script(src='javascripts/homepageGeo.js')
-    

@@ -1,203 +1,158 @@
-html
-  link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
-  script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
-  script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
-  style.
-    body
-    {
-    background: url('http://farm3.staticflickr.com/2832/12303719364_c25cecdc28_b.jpg') fixed;
-    background-size: cover;
-    padding: 0;
-    margin: 0;
-    }
-    .wrap
-    {
-    width: 100%;
-    height: 100%;
-    min-height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 99;
-    }
-    p.form-title
-    {
-    font-family: 'Open Sans' , sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    text-align: center;
-    color: #FFFFFF;
-    margin-top: 5%;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    }
-    section
-    {
-    width: 250px;
-    margin: 0 auto;
-    }
-    section.login input[type="text"], section.login input[type="password"]
-    {
-    width: 100%;
-    margin: 0;
-    padding: 5px 10px;
-    background: 0;
-    border: 0;
-    border-bottom: 1px solid #FFFFFF;
-    outline: 0;
-    font-style: italic;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 1px;
-    margin-bottom: 5px;
-    color: #FFFFFF;
-    outline: 0;
-    }
-    section.login input[type="submit"]
-    {
-    width: 100%;
-    font-size: 14px;
-    text-transform: uppercase;
-    font-weight: 500;
-    margin-top: 16px;
-    outline: 0;
-    cursor: pointer;
-    letter-spacing: 1px;
-    }
-    section.login input[type="submit"]:hover
-    {
-    transition: background-color 0.5s ease;
-    }
-    section.login .remember-forgot
-    {
-    float: left;
-    width: 100%;
-    margin: 10px 0 0 0;
-    }
-    section.login .forgot-pass-content
-    {
-    min-height: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    }
-    section.login label, form.login a
-    {
-    font-size: 12px;
-    font-weight: 400;
-    color: #FFFFFF;
-    }
-    section.login a
-    {
-    transition: color 0.5s ease;
-    }
-    section.login a:hover
-    {
-    color: #2ecc71;
-    }
-    .pr-wrap
-    {
-    width: 100%;
-    height: 100%;
-    min-height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 999;
-    display: none;
-    }
-    .show-pass-reset
-    {
-    display: block !important;
-    }
-    .pass-reset
-    {
-    margin: 0 auto;
-    width: 250px;
-    position: relative;
-    margin-top: 22%;
-    z-index: 999;
-    background: #FFFFFF;
-    padding: 20px 15px;
-    }
-    .pass-reset label
-    {
-    font-size: 12px;
-    font-weight: 400;
-    margin-bottom: 15px;
-    }
-    .pass-reset input[type="email"]
-    {
-    width: 100%;
-    margin: 5px 0 0 0;
-    padding: 5px 10px;
-    background: 0;
-    border: 0;
-    border-bottom: 1px solid #000000;
-    outline: 0;
-    font-style: italic;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 1px;
-    margin-bottom: 5px;
-    color: #000000;
-    outline: 0;
-    }
-    .pass-reset input[type="submit"]
-    {
-    width: 100%;
-    border: 0;
-    font-size: 14px;
-    text-transform: uppercase;
-    font-weight: 500;
-    margin-top: 10px;
-    outline: 0;
-    cursor: pointer;
-    letter-spacing: 1px;
-    }
-    .pass-reset input[type="submit"]:hover
-    {
-    transition: background-color 0.5s ease;
-    }
-    .posted-by
-    {
-    position: absolute;
-    bottom: 26px;
-    margin: 0 auto;
-    color: #FFF;
-    background-color: rgba(0, 0, 0, 0.66);
-    padding: 10px;
-    left: 45%;
-    }
-  .container
-    .row
-      .col-md-12
-        .pr-wrap
-          .pass-reset
-            label Enter the email you signed up with
-            input(type='email', placeholder='Email')
-            input.pass-reset-submit.btn.btn-success.btn-sm(type='submit', value='Submit')
-        .wrap
-          p.form-title Sign In
-          section.login
-            input#logEmail(type='text', placeholder='Username')
-            input#logPassword(type='password', placeholder='Password')
-            input#logButton.btn.btn-success.btn-sm(type='submit', value='Sign In')
-            .remember-forgot
-              .row
-                .col-md-6
-                  .checkbox
-                    label
-                      input(type='checkbox')
-                      |                                     Remember Me
-                .col-md-6.forgot-pass-content
-                  a.forgot-pass(href='javascription:void(0)') Forgot Password
-  // Bootstrap Core JavaScript
-  script(src='stylesheets/js/bootstrap.min.js')
-  // Plugin JavaScript
-  script(src='stylesheets/js/jquery.easing.min.js')
-  script(src='stylesheets/js/jquery.fittext.js')
-  script(src='stylesheets/js/wow.min.js')
-  script(src='javascripts/appProf.js')
-  // Custom Theme JavaScript
-  script(src='stylesheets/js/creative.js')
-
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    title Welcome2
+    // Bootstrap Core CSS
+    link(href='css/bootstrap.min.css', rel='stylesheet')
+    // Custom CSS
+    link(href='css/grayscale.css', rel='stylesheet')
+    // Custom Fonts
+    link(href='font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+    link(href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic', rel='stylesheet', type='text/css')
+    link(href='http://fonts.googleapis.com/css?family=Montserrat:400,700', rel='stylesheet', type='text/css')
+    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+    // WARNING: Respond.js doesn't work if you view the page via file://
+    //
+      if lt IE 9
+      script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+      script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+  body#page-top(data-spy='scroll', data-target='.navbar-fixed-top')
+    // Navigation
+    nav.navbar.navbar-custom.navbar-fixed-top(role='navigation')
+      .container
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-main-collapse')
+            i.fa.fa-bars
+          a.navbar-brand.page-scroll(href='#page-top')
+            i.fa.fa-play-circle
+            span.light Start
+            |  Bootstrap
+        // Collect the nav links, forms, and other content for toggling
+        .collapse.navbar-collapse.navbar-right.navbar-main-collapse
+          ul.nav.navbar-nav
+            // Hidden li included to remove active class from about link when scrolled up past about section
+            li.hidden
+              a(href='#page-top')
+            li
+              a.page-scroll(href='#SignUp') Sign Up
+            li
+              a.page-scroll(href='#vip') VIP
+            li
+              a.page-scroll(href='#forgotpassword') Forgot Password
+        // /.navbar-collapse
+      // /.container
+    // Intro Header
+    header.intro
+      .intro-body
+        .container
+          .row
+            .col-md-8.col-md-offset-2
+              h1.brand-heading Welcome2
+              h3  Log In 
+              section.login
+                input#logEmail(type='text', placeholder='Username')
+                input#logPassword(type='password', placeholder='Password')
+                input#logButton.btn.btn-success.btn-sm(type='submit', value='Sign In')
+                .remember-forgot
+    // Sign up Section
+    section#SignUp.content-section.text-center
+      .container
+        .row
+          .col-lg-8.col-lg-offset-2
+            h2.section-heading Sign Up!
+            hr.light
+            #submitForm
+              p#fnameText First Name 
+              input#fname.form-control(type='text', placeholder='First Name')
+              p#lnameText Last Name 
+              input#lname.form-control(type='text', placeholder='Last Name')
+              p#emailText Username 
+              input#email.form-control(type='text', placeholder='')
+              p#passwordText Password 
+              input#password.form-control(type='password', name='Password', placeholder='Must be 8 characters, contain 1 digit & 1 letter')
+              p#repasswordText Retype-Password 
+              input#passwordType.form-control(type='password', name='Password', placeholder='Must be 8 characters, contain 1 digit & 1 letter')
+              p#fillSection
+              p#secretAnswerText Secret Question 
+              select#secretAnswerList
+                option(value='favoriteartist') Who's your favorite artist?
+                option(value='cityborn') In what city were you born?
+                option(value='firstcar') What model was your first car?
+              input#secretAnswer.form-control(type='text', name='secretAnswer', placeholder='One word only, must be at least 4 characters')
+              br
+              input#signButton.btn.btn-success.btn-sm(type='button', name='button', value='submit')
+      br
+      br
+      br
+      p.brand-heading
+      h3 Are you an important person?
+      p
+      p
+      h4 Click here
+      p
+      a.btn.btn-circle.page-scroll(href='#vip')
+        i.fa.fa-angle-double-down.animated
+    // Download Section
+    section#vip.content-section.text-center
+      .container
+        .row
+          .col-lg-8.col-lg-offset-2
+            h2.section-heading  VIP Sign Up
+            p
+              | If you would like an account with higher permissions please fill this out and we will be in touch!
+            hr.light
+            #submitForm
+              p#fnameText1 First Name 
+              input#fname1.form-control(type='text', placeholder='First Name')
+              p#lnameText1 Last Name 
+              input#lname1.form-control(type='text', placeholder='Last Name')
+              p#occupationText Occupation
+              input#occupation.form-control(type='text', placeholder='e.g. Professor, Administrator')
+              p#emailText1 Username 
+              input#email1.form-control(type='text', placeholder='')
+              p#passwordText1 Password 
+              input#password1.form-control(type='password', name='Password', placeholder='Must be 8 characters, contain 1 digit & 1 letter')
+              p#repasswordText1 Retype-Password 
+              input#passwordType1.form-control(type='password', name='Password', placeholder='Must be 8 characters, contain 1 digit & 1 letter')
+              p#secretAnswerText1 Secret Question 
+              select#secretAnswerList1
+                option(value='sA1') Who's your favorite artist?
+                option(value='sA2') In what city were you born?
+                option(value='sA3') What model was your first car?
+              input#secretAnswer1.form-control(type='text', name='secretAnswer1', placeholder='One word only, must be at least 4 characters ')
+              br
+              input#vipsignButton.btn.btn-success.btn-sm(type='button', name='button', value='submit')
+              p#fillSection
+    // Forgot password Section
+    section#forgotpassword.container.content-section.text-center
+      .row
+        .col-lg-8.col-lg-offset-2
+          h2 Forgot Password?
+          p If your answer checks out then your new password will be set.
+          p#forgotemailText Username 
+          input#forgotemail.form-control(type='text', placeholder='')
+          p#forgotsecretAnswerText Secret Question 
+          select#forgotsecretAnswerList.btn.btn-default.btn-lg
+            option(value='sA1') Who's your favorite artist?
+            option(value='sA2') In what city were you born?
+            option(value='sA3') What model was your first car?
+          input#forgotsecretAnswer.form-control(type='text', name='secretAnswer', placeholder='One word only, must be at least 4 characters ')
+          p#forgotnewpasswordText New Password 
+          input#forgotnewpassword.form-control(type='password', name='Password', placeholder='Must be 8 characters, contain 1 digit & 1 letter')
+          input#forgotPassword.btn.btn-success.btn-sm(type='button', name='button', value='submit')
+    // Map Section
+    #map
+    // jQuery
+    script(src='javascripts/jquery.js')
+    // Bootstrap Core JavaScript
+    script(src='javascripts/bootstrap.min.js')
+    // Plugin JavaScript
+    script(src='javascripts/jquery.easing.min.js')
+    // Custom Theme JavaScript
+    script(src='javascripts/grayscale.js')
+    script(src='javascripts/appProf.js')
