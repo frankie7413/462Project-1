@@ -4,6 +4,7 @@ var router = express.Router();
 var User = require('../models/User');
 var Location = require('../models/Location');
 var ImageLocation = require('../models/imageLocation');
+var textMessage = require('../models/textMessage');
 var formidable = require('formidable'),
     util = require('util'),
     fs   = require('fs-extra'),
@@ -12,7 +13,7 @@ var formidable = require('formidable'),
 var LOC;
 var loggedIn = false;
 var dir;
-var USERNAME;
+var USERNAME, USER;
 
 // =====================================
 // PROFILE SECTION =====================
@@ -24,12 +25,13 @@ var USERNAME;
 router.get('/', isLoggedIn, function(req, res, next) {
 	var userInfo = req.user;
 	username = userInfo.local.email;
+	USER = userInfo;
 	res.render('profileView',{
 		fname: userInfo.local.firstName, 
 		lname: userInfo.local.lastName,
 		university: userInfo.local.college, 
 		email: userInfo.local.email, 
-		verify: userInfo.local.verify});
+		vip: userInfo.local.vip});
 });
 
 //route middleware to make sure a user is logged in
@@ -90,6 +92,47 @@ router.post('/upload', function (req, res){
 });
 
 
+router.post('/uploadText', function (req, res){
+var form = new formidable.IncomingForm();
+  form.parse(req, function(err, fields, files) {
+    res.redirect('/profile');
+  });
+  console.log(req.body);
+  var message = req.body;
+  console.log(USER);
+  if(message.alert == 'Y' && USER.vip != 'Y'){
+        message.alert = 'N';
+  }
+  
+  var temp = "";
+  var text  = textMessage({
+                text: message.message,
+                username: USER.local.email,
+                alert: message.alert  
+  });
+  
+  text.save(function(err,temp){
+		console.log(temp);
+		if(err) return console.error(err);
+		//saveLocation(LOC.username,LOC.city);
+		res.redirect('/profile');
+		
+		});
+  
+});
+
+
+router.post('/getText', function (req, res){
+ // console.log(req.body);
+ console.log("getttt");
+  textMessage.find(function(err, data){
+			console.log(data);
+			if(err) return console.error(err);
+			
+			res.json(data);
+			});
+
+});
 router.post('/Location', function(req, res, next) {
 	var temp = req.body;
 	var repeat = false;
@@ -108,7 +151,7 @@ router.post('/Location', function(req, res, next) {
 			console.log("repeat");
 		}
 
-		if(!repeat){
+		if(true){
 			dir = 'uploads/' + LOC.city+"/";
 
 		if (!fs.existsSync(dir)){

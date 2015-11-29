@@ -70,7 +70,7 @@ module.exports = function(passport) {
                 newUser.local.secretAnswer =  stuff.secretAnswer,
         		newUser.local.secretQuestion =  stuff.secretQuestion,
         		newUser.local.occupation = 'lol',
-                newUser.local.verify = 'unverified';
+                newUser.local.vip = 'N';
                 // save the user
                 newUser.save(function(err) {
                     if (err)

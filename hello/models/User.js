@@ -15,7 +15,7 @@ var userSchema = mongoose.Schema({
         secretAnswer : String,
         secretQuestion: String,
         occupation	 : String,
-        verify       : String
+        vip       : String
     },
     facebook         : {
         id           : String,

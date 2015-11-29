@@ -10,7 +10,7 @@ var sess;
 // HOME PAGE ===========================
 // =====================================
 router.get('/', function(req, res, next) {
-console.log("!");
+
 	res.render('index');
 	
 });
@@ -19,13 +19,13 @@ console.log("!");
 // SIGNUP/LOGIN PAGE ===================
 // =====================================
 router.get('/start', function(req, res, next) {
-console.log("2");
+
   res.render('professorStart');
   
 });
 
 router.get('/success', function(req, res, next) {
-console.log("3");
+
   res.json({'url': true});
   
 });
@@ -42,7 +42,7 @@ router.get('/fail', function(req, res, next) {
 // show the login form
 //messge is error
 router.get('/login', function(req, res, next) {
-console.log("4");
+
 	res.render('professorStart', { message: req.flash('loginMessage') });
 });
 
