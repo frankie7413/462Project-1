@@ -57,18 +57,25 @@ router.get('/logout', function(req, res, next) {
 
 
 router.post('/upload', function (req, res){
+var valid = true;
   var form = new formidable.IncomingForm();
   form.parse(req, function(err, fields, files) {
     res.redirect('/profile');
   });
-	
+	form.on('progress', function(bytesReceived, bytesExpected) {
+    if (bytesReceived > 20971520) {
+        valid = false;
+    }
+});
   form.on('end', function(fields, files) {
+  if(valid){
     /* Temporary location of our uploaded file */
     var temp_path = this.openedFiles[0].path;
     /* The file name of the uploaded file */
     var file_name = this.openedFiles[0].name;
     /* Location where we want to copy the uploaded file */
-    
+  //  var fileSize = getFilesizeInBytes(file_name);
+   // console.log(fileSize);
     var imageLoc = ImageLocation({
     				filename: file_name,
     				location: LOC.city   	
@@ -88,15 +95,14 @@ router.post('/upload', function (req, res){
         console.log("success!");
       }
     });
+    }
   });
+  
 });
 
 
 router.post('/uploadText', function (req, res){
-var form = new formidable.IncomingForm();
-  form.parse(req, function(err, fields, files) {
-    res.redirect('/profile');
-  });
+
 
   var message = req.body;
   
@@ -197,7 +203,11 @@ router.post('/Location', function(req, res, next) {
      
      }
 });
-
+function getFilesizeInBytes(filename) {
+ var stats = file.statSync(filename)
+ var fileSizeInBytes = stats["size"]
+ return fileSizeInBytes
+}
 function getLocations(req,res,next,getLocation){
 Location.distinct("location",{username:LOC.username}, function(err, getLocation){
 			console.log(getLocation);
