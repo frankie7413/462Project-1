@@ -14,16 +14,53 @@ var main = function() {
 		loginInfo;
 		
 	loadScript();
-	geoTest();
-	function geoTest() {
- 
-    $.get("http://ipinfo.io", function (response) {
-    $("#ip").html("IP: " + response.ip);
-   
-    city = response.city;
-   console.log(city);
-   var loc = {"city": city, "username": "frankthetank"};
-   $.post("profile/Location", loc, function(data){
+	getLocation();
+	
+	  function getLocation() {
+      if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+      x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+      }
+      function showPosition(position) {
+      var latlon = position.coords.latitude + "," + position.coords.longitude;
+      codeLatLng(position.coords.latitude, position.coords.longitude)
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      var scale = 2
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+      scale = 1
+      }
+      var img_url = "http://maps.googleapis.com/maps/api/staticmap?center="
+      +latlon+"&markers="+latlon+"&zoom=13&size="+w+"x"+h+"&scale="+scale+"&sensor=false";
+      //document.getElementById("introLoader").style.class = "test";
+      var c = document.getElementsByClassName("intro");
+      c[0].style.backgroundImage="url('"+img_url+"')";
+      }
+      
+      function codeLatLng(lat, lng) {
+ var geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(lat, lng);
+     geocoder.geocode({'location': latlng}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+      console.log(results)
+        if (results[1]) {
+         //formatted address
+       //  city= results[0].address_components[3];
+         //document.getElementById("hello").innerHTML = city.short_name + " " + city.long_name;
+        //find country name
+             for (var i=0; i<results[0].address_components.length; i++) {
+            for (var b=0;b<results[0].address_components[i].types.length;b++) {
+//console.log(results[0].address_components[i].types[b]);
+//console.log(results[0].address_components[i]);
+            //there are different types that might hold a city admin_area_lvl_1 usually does in come cases looking for sublocality type will be more appropriate
+                if (results[0].address_components[i].types[b] == "locality") {
+                    //this is the object you are looking for
+                    city = results[0].address_components[i]
+                    console.log(city.short_name+"THID")
+                   var loc = {"city": city.short_name, "username": "frankthetank"};
+                    $.post("profile/Location", loc, function(data){
 				console.log(data);
 				
 				//console.log(data[0]+" "+data[1] + "hist");
@@ -31,10 +68,58 @@ var main = function() {
 				callText();
 				
 			});
-}, "jsonp");
+                    break;
+                }
+            }
+        }
+        //city data
+       
 
 
-}
+        } else {
+          alert("No results found");
+        }
+      } else {
+        alert("Geocoder failed due to: " + status);
+      }
+    });
+  }
+      function showError(error) {
+      switch(error.code) {
+      case error.PERMISSION_DENIED:
+      x.innerHTML = "User denied the request for Geolocation."
+      break;
+      case error.POSITION_UNAVAILABLE:
+      x.innerHTML = "Location information is unavailable."
+      break;
+      case error.TIMEOUT:
+      x.innerHTML = "The request to get user location timed out."
+      break;
+      case error.UNKNOWN_ERROR:
+      x.innerHTML = "An unknown error occurred."
+      break;
+      }
+      }
+	// function geoTest() {
+//  
+//     $.get("http://ipinfo.io", function (response) {
+//     $("#ip").html("IP: " + response.ip);
+//    
+//     city = response.city;
+//    console.log(city);
+//    var loc = {"city": city, "username": "frankthetank"};
+//    $.post("profile/Location", loc, function(data){
+// 				console.log(data);
+// 				
+// 				//console.log(data[0]+" "+data[1] + "hist");
+// 				getImage(data);
+// 				callText();
+// 				
+// 			});
+// }, "jsonp");
+// 
+// 
+// }
 	/*
 	
       var fileextension = ".jpg";

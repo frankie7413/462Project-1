@@ -5,45 +5,8 @@ html(lang='en')
     meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
     script(src='http://code.jquery.com/jquery-latest.min.js')
+    script(type='text/javascript', src='http://maps.googleapis.com/maps/api/js?sensor=false')
     script.
-      function getLocation() {
-      if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition, showError);
-      } else {
-      x.innerHTML = "Geolocation is not supported by this browser.";
-      }
-      }
-      function showPosition(position) {
-      var latlon = position.coords.latitude + "," + position.coords.longitude;
-      var w = window.innerWidth;
-      var h = window.innerHeight;
-      var scale = 2
-      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-      scale = 1
-      }
-      var img_url = "http://maps.googleapis.com/maps/api/staticmap?center="
-      +latlon+"&markers="+latlon+"&zoom=13&size="+w+"x"+h+"&scale="+scale+"&key=AIzaSyA9obqVtqZ5v5VyIcCxQ2GUUM8wSur5Qk8&sensor=false";
-      console.log(img_url + "GGGG")
-      //document.getElementById("introLoader").style.class = "test";
-      var c = document.getElementsByClassName("intro");
-      c[0].style.backgroundImage="url('"+img_url+"')";
-      }
-      function showError(error) {
-      switch(error.code) {
-      case error.PERMISSION_DENIED:
-      x.innerHTML = "User denied the request for Geolocation."
-      break;
-      case error.POSITION_UNAVAILABLE:
-      x.innerHTML = "Location information is unavailable."
-      break;
-      case error.TIMEOUT:
-      x.innerHTML = "The request to get user location timed out."
-      break;
-      case error.UNKNOWN_ERROR:
-      x.innerHTML = "An unknown error occurred."
-      break;
-      }
-      }
       function hideMap(){
       $('#intro').slideUp();
       $('.navbar').fadeIn();
@@ -67,7 +30,7 @@ html(lang='en')
       else
       cntfield.value = maxlimit - field.value.length;
       }
-      window.onload = getLocation;
+      // window.onload = getLocation;
     script(src='javascripts/homepageGeo.js')
     script.
       $(".navbar-nav li a").click(function(event) {
@@ -79,6 +42,7 @@ html(lang='en')
       document.getElementById('files').addEventListener('change', handleFileSelect, false);
       }
       function showTextbox(){
+      isVip();
       document.getElementById('lightText').style.display='block';
       document.getElementById('fade').style.display='block';
       }
@@ -94,12 +58,22 @@ html(lang='en')
       document.getElementById('lightText').style.display='none';
       document.getElementById('fade').style.display='none';
       var text = document.getElementById('q17').value;
-      console.log("lol"+text);
-      var loc = {"message": text, "username": "frankthetank","alert":"N"};
-      $.post("profile/uploadText", loc, function(data){
+      var alert = document.getElementById('myCheck').value;
+      console.log(alert+"000");
+      var mes = {"message": text, "username": "frankthetank","alert":alert};
+      $.post("profile/uploadText", mes, function(data){
       console.log(data);
       location.reload();
       //getImage(data);
+      });
+      }
+      function isVip(){
+      $.post("profile/isVip", function(data){
+      console.log(data);
+      if(data.trim() == "Y"){
+      // $("#buttonholder").append('<input id="myCheck" type="checkbox"> Is this an alert?');
+      document.getElementById('buttonholder').style.display='block';
+      }
       });
       }
       function handleFileSelect(evt) {
@@ -116,154 +90,6 @@ html(lang='en')
       document.getElementById('sizeError').innerHTML = '<ul>' + output.join('') + '</ul>';
       }
     style.
-      .black_overlay{
-      display: none;
-      position: absolute;
-      top: 0%;
-      left: 0%;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-      height: 100%;
-      background-color: black;
-      z-index:10;
-      -moz-opacity: 0.8;
-      opacity:.80;
-      filter: alpha(opacity=80);
-      }
-      .white_content {
-      display: none;
-      position: fixed;
-      width:80%;
-      height: 100%;
-      padding: 10px;
-      z-index:1002;
-      overflow: auto;
-      margin-left: auto ;
-      margin-right: auto ;
-      max-width:600px;
-      margin-top:40px;
-      }
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-      <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-      <script>
-      function getLocation() {
-      if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition, showError);
-      } else {
-      x.innerHTML = "Geolocation is not supported by this browser.";
-      }
-      }
-      function showPosition(position) {
-      var latlon = position.coords.latitude + "," + position.coords.longitude;
-      var w = window.innerWidth;
-      var h = window.innerHeight;
-      var scale = 2
-      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-      scale = 1
-      }
-      var img_url = "http://maps.googleapis.com/maps/api/staticmap?center="
-      +latlon+"&markers="+latlon+"&zoom=13&size="+w+"x"+h+"&scale="+scale+"&key=AIzaSyA9obqVtqZ5v5VyIcCxQ2GUUM8wSur5Qk8&sensor=false";
-      console.log(img_url + "GGGG")
-      //document.getElementById("introLoader").style.class = "test";
-      var c = document.getElementsByClassName("intro");
-      c[0].style.backgroundImage="url('"+img_url+"')";
-      }
-      function showError(error) {
-      switch(error.code) {
-      case error.PERMISSION_DENIED:
-      x.innerHTML = "User denied the request for Geolocation."
-      break;
-      case error.POSITION_UNAVAILABLE:
-      x.innerHTML = "Location information is unavailable."
-      break;
-      case error.TIMEOUT:
-      x.innerHTML = "The request to get user location timed out."
-      break;
-      case error.UNKNOWN_ERROR:
-      x.innerHTML = "An unknown error occurred."
-      break;
-      }
-      }
-      function hideMap(){
-      $('#intro').slideUp();
-      $('.navbar').fadeIn();
-      }
-      (function ($) {
-      $(document).ready(function(){
-      // hide .navbar first
-      $(".navbar").hide();
-      });
-      }(jQuery));
-      $(document).on('click','.navbar-collapse.in',function(e) {
-      if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
-      $(this).collapse('hide');
-      }
-      });
-      function textCounter(field,cnt, maxlimit) {
-      var cntfield = document.getElementById(cnt)
-      if (field.value.length > maxlimit) // if too long...trim it!
-      field.value = field.value.substring(0, maxlimit);
-      // otherwise, update 'characters left' counter
-      else
-      cntfield.value = maxlimit - field.value.length;
-      }
-      window.onload = getLocation;
-      </script>
-      <script src="javascripts/homepageGeo.js"></script>
-      <script>
-      $(".navbar-nav li a").click(function(event) {
-      $(".navbar-collapse").collapse('hide');
-      });
-      function showLightbox(){
-      document.getElementById('light').style.display='block';
-      document.getElementById('fade').style.display='block';
-      document.getElementById('files').addEventListener('change', handleFileSelect, false);
-      }
-      function showTextbox(){
-      document.getElementById('lightText').style.display='block';
-      document.getElementById('fade').style.display='block';
-      }
-      function cancelUpload(){
-      document.getElementById('light').style.display='none';
-      document.getElementById('fade').style.display='none';
-      }
-      function cancelText(){
-      document.getElementById('lightText').style.display='none';
-      document.getElementById('fade').style.display='none';
-      }
-      function submitText(){
-      document.getElementById('lightText').style.display='none';
-      document.getElementById('fade').style.display='none';
-      var text = document.getElementById('q17').value;
-      console.log("lol"+text);
-      var loc = {"message": text, "username": "frankthetank","alert":"N"};
-      $.post("profile/uploadText", loc, function(data){
-      console.log(data);
-      location.reload();
-      //getImage(data);
-      });
-      }
-      function handleFileSelect(evt) {
-      var files = evt.target.files; // FileList object
-      document.getElementById("js-upload-submit").disabled = false;
-      // files is a FileList of File objects. List some properties.
-      var output = [];
-      for (var i = 0, f; f = files[i]; i++) {
-      if(f.size > 20971520){
-      output.push("<strong>File size too large</strong>");
-      document.getElementById("js-upload-submit").disabled = true;
-      }
-      }
-      document.getElementById('sizeError').innerHTML = '<ul>' + output.join('') + '</ul>';
-      }
-      </script>
-      <style>
       .black_overlay{
       display: none;
       position: absolute;
@@ -335,7 +161,6 @@ html(lang='en')
       white-space: -o-pre-wrap;   /* Opera 7 */
       word-wrap: break-word;      /* IE */
       }
-      </st
     title Welcome2
     // Google fonts
     link(href='http://fonts.googleapis.com/css?family=Roboto:400,300,700', rel='stylesheet', type='text/css')
@@ -354,7 +179,7 @@ html(lang='en')
     link(rel='stylesheet', href='assets/style.css')
   body#home
     #container
-      header#intro.intro(style='background-position:cen‌​ter;      background-repeat:no-repeat;background-size: 100% 100%;')
+      header#intro.intro(style='background-position:center;background-repeat:no-repeat;background-size: 100% 100%;')
         .intro__content
           h1 Welcome2
           button.trigger(onclick='hideMap();')
@@ -386,13 +211,9 @@ html(lang='en')
           #bs-example-navbar-collapse-1.collapse.navbar-collapse
             ul.nav.navbar-nav
               li
-                a(href='#') About
-              li
-                a(href='#') Services
-              li
-                a.dropdown-toggle(href='#', data-target='.nav-collapse') Contact
+                a(href='#', style='color:#fff') Show Map
               li.dropdown
-                a(data-toggle='dropdown', href='#')
+                a(data-toggle='dropdown', style='color:#fff', href='#')
                   | Upload
                   span.caret
                 ul.dropdown-menu(data-toggle='collapse', data-target='.nav-collapse')
@@ -402,15 +223,9 @@ html(lang='en')
                     a(href='#', onclick='showTextbox();') Text
           // /.navbar-collapse
         // /.container
-      section
-      section
-        .container(style='padding-top:5%;')
-          .spacer
-            .filler
-              #text.text
       // text input
       #lightText.white_content
-        .container
+        div
           .panel.panel-default
             .panel-heading
               strong Upload Text
@@ -421,12 +236,14 @@ html(lang='en')
                 |  characters left
               br
               textarea#q17.scanwid(onkeydown='textCounter(this,270);', onkeyup="textCounter(this,'q17length' ,270)", name='q17', rows='5', cols='', style='width:60%')
-            button.btn.btn-danger(type='button', onclick='cancelText();', style='margin-right: 20px') Cancel
+            #buttonholder.buttonnholder(style='display:none')
+              input#myCheck(type='checkbox')
+              |  Is this an alert?
+            button.btn.btn-danger(type='button', onclick='cancelText();', style='margin-right: 15px') Cancel
             button.btn.btn-success(type='submit', onclick='submitText();') Upload
           // /text input
         // /container
         a(href='javascript:void(0)', onclick="document.getElementById('lightText').style.display='none';document.getElementById('fade').style.display='none'")
-      #alert innn9522222222555555nnttttooo
       // Upload Media
       #light.white_content
         .container
@@ -450,6 +267,12 @@ html(lang='en')
           // /Upload Media
         // /container
         a(href='javascript:void(0)', onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'")
+      section
+      section(style='padding-top:5%;')
+        .container
+          .spacer
+            .filler
+              #text.text
       #fade.black_overlay
       // /overlay
       section.items-wrap
@@ -515,4 +338,3 @@ html(lang='en')
 // animate.css
 // gallery
 // favicon
-

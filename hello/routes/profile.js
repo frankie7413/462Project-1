@@ -24,7 +24,7 @@ var USERNAME, USER;
 // res.render('unverifiedView',{fname: user.firstName, lname: user.lastName, university: user.college, email: user.email, verify: user.verify});
 router.get('/', isLoggedIn, function(req, res, next) {
 	var userInfo = req.user;
-	username = userInfo.local.email;
+	USERNAME = userInfo.local.email;
 	USER = userInfo;
 	res.render('profileView',{
 		fname: userInfo.local.firstName, 
@@ -97,20 +97,26 @@ var form = new formidable.IncomingForm();
   form.parse(req, function(err, fields, files) {
     res.redirect('/profile');
   });
-  console.log(req.body);
+
   var message = req.body;
-  console.log(USER);
-  if(message.alert == 'Y' && USER.vip != 'Y'){
-        message.alert = 'N';
-  }
+  
+  
+  if(message.alert == "on")
+        message.alert = "Y";
+   else
+        message.alert = "N";
+  
+  if(message.alert == "Y" && req.user.local.vip != "Y"){
+        message.alert = "N";
+    }
   
   var temp = "";
   var text  = textMessage({
                 text: message.message,
-                username: USER.local.email,
+                username: req.user.local.email,
                 alert: message.alert  
   });
-  
+  console.log(text);
   text.save(function(err,temp){
 		console.log(temp);
 		if(err) return console.error(err);
@@ -124,13 +130,25 @@ var form = new formidable.IncomingForm();
 
 router.post('/getText', function (req, res){
  // console.log(req.body);
- console.log("getttt");
   textMessage.find(function(err, data){
-			console.log(data);
+			//console.log(data);
 			if(err) return console.error(err);
 			
 			res.json(data);
 			});
+
+});
+
+router.post('/isVip', function (req, res){
+ // console.log(req.body);
+ 
+ textMessage.find(function(err, data){
+			
+			if(err) return console.error(err);
+			console.log(USER.local.vip)
+			res.json(USER.local.vip);
+			});
+  
 
 });
 router.post('/Location', function(req, res, next) {
@@ -140,8 +158,10 @@ router.post('/Location', function(req, res, next) {
 	if(loggedIn){
 	
 		console.log("logged in");
+		console.log(req.body);
 		temp.city = temp.city.replace(/ /g, '_');
-		if (LOC === undefined || LOC === null) {
+		//console.log(LOC.city+" "+temp.city+" " +req.user.local.email+ " " +USERNAME);
+		if (LOC === undefined || LOC === null || LOC.city != temp.city) {
     		LOC = temp;
     		LOC.username = USERNAME;
     		console.log(LOC.city);
@@ -153,7 +173,7 @@ router.post('/Location', function(req, res, next) {
 
 		if(true){
 			dir = 'uploads/' + LOC.city+"/";
-
+            console.log(dir);
 		if (!fs.existsSync(dir)){
     		fs.mkdirSync(dir);
 		}
