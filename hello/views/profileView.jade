@@ -118,7 +118,7 @@ html(lang='en')
     style.
       .black_overlay{
       display: none;
-      position: absolute;
+      position: fixed;
       top: 0%;
       left: 0%;
       right: 0;
@@ -400,6 +400,8 @@ html(lang='en')
                     a(href='#', onclick='showLightbox();') Image/Video
                   li(data-toggle='collapse', data-target='.navbar-collapse.in')
                     a(href='#', onclick='showTextbox();') Text
+              li
+                a(href='/profile/logout') Logout
           // /.navbar-collapse
         // /.container
       section

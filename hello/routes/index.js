@@ -3,7 +3,6 @@ var passport = require('passport');
 var router = express.Router();
 var User = require('../models/User');
 //var LogIn = require('../models/LogIn');
-var sess;
 
 
 // =====================================
@@ -32,7 +31,7 @@ router.get('/success', function(req, res, next) {
 
 router.get('/fail', function(req, res, next) {
 
-  res.json({'url': false});
+  res.json({'url': false, message: req.flash('loginMessage')});
 });
 
 
@@ -99,11 +98,7 @@ console.log(check.email+"F");
             } else {
 					 console.log("Not found");
             }
-		
         });    
-
-
-
 });
 
 function updatePassword(user,check){
@@ -117,9 +112,6 @@ console.log(newUser.generateHash(check.password));
         console.log("errorrrrr");
 });;
       		
-
-
-
 } 
 
 function saveUser(user,check){
@@ -139,17 +131,6 @@ function saveUser(user,check){
 
 
 }
-//@route GET /Recovery will genrate recovery page
-//will have user to enter email to send email to account 
-//enter valid email 
-//check against db
-//if found generate email to send recovery password 
-//need mailer
-// router.get('/Recovery', function(req, res, next) {
-//   res.render('Recovery');
-// });
-
-
 
 module.exports = router;
 

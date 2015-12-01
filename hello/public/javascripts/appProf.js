@@ -36,15 +36,8 @@ var main = function() {
 	}
 2
 	function logError(errCheck){
-		$('#logFill').empty(); //for when user does nor fill fields properly
-			
-		if(errCheck === 'password'){
-			$('#logFill').append('*Password does not match Email.');
-		}
-		else {
-			$('#logFill').append('User does not Exist. Please Enter Valid Credenatials.');
-		}
-
+		$('#logMessage').empty(); //for when user does not fill fields properly
+		$('#logMessage').append(errCheck);
 	}
 
 	//Query database to see if user exist!
@@ -63,18 +56,9 @@ var main = function() {
 				if(status.url) {
 					window.location = 'profile';
 				}
-				else if(status.password){
-					logError('password');
-				}
 				else {
-					logError('exist');
+					logError(status.message);
 				}
-				// if(status.url) {
-				// 	window.location = 'profile';
-				// }
-				// else {
-				// 	$.get("/login");
-				// }
 			});
 		}
 	}
