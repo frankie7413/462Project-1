@@ -24,13 +24,13 @@ var USERNAME, USER;
 // res.render('unverifiedView',{fname: user.firstName, lname: user.lastName, university: user.college, email: user.email, verify: user.verify});
 router.get('/', isLoggedIn, function(req, res, next) {
 	var userInfo = req.user;
-	username = userInfo.local.user;
+	username = userInfo.local.email;
 	USER = userInfo;
 	res.render('profileView',{
 		fname: userInfo.local.firstName, 
 		lname: userInfo.local.lastName,
 		university: userInfo.local.college, 
-		user: userInfo.local.user, 
+		email: userInfo.local.email, 
 		vip: userInfo.local.vip});
 });
 
@@ -107,7 +107,7 @@ var form = new formidable.IncomingForm();
   var temp = "";
   var text  = textMessage({
                 text: message.message,
-                username: USER.local.user,
+                username: USER.local.email,
                 alert: message.alert  
   });
   

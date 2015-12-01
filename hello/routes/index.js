@@ -30,7 +30,7 @@ router.get('/success', function(req, res, next) {
 });
 
 router.get('/fail', function(req, res, next) {
-  
+
   res.json({'url': false, message: req.flash('loginMessage')});
 });
 
