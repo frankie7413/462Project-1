@@ -15,33 +15,32 @@ var main = function() {
 		regInfo,
 		loginInfo;
 
-	//Sign up section create database entry
-	//makes sure that the fields have a valid input and fowards content to server
-	function SectionmissingField(check){
-		console.log('checking fields');
-		if(check === false){
-			$('#fillSection').empty(); //for when user does nor fill fields properly
-			$('#fillSection').append('Please fill in area(s) with *.');
-		} else {
-			console.log('Inputs are complete');
-			//PostInformation();
-			regInfo = {'firstName': fname, 'lastName': lname, 'email': email, 'secretAnswer': secretAnswer, 'secretQuestion': secretQuestion, 'password': password, 'occupation':occupation, 'vip':'0'};
+	function SectionmissingField(version){
+			regInfo = {'firstName': fname, 
+						'lastName': lname, 
+							'email': email, 
+							'secretAnswer': secretAnswer, 
+							'secretQuestion': secretQuestion, 
+							'password': password, 
+							'occupation':occupation, 
+							'vip':'0'};
 
-			$.post("/signUp", regInfo, function(data){
-				//PostInformation(data);
-				// console.log('/signup called');
-				window.location = 'profile';
+			$.post("/signup", regInfo, function(status){
+				if(status.url){
+					window.location = 'profile';
+				}else{
+					if(version === 'vip'){
+						$('#signVipMessage').empty();
+						$('#signVipMessage').append(status.message);
+					} else {
+						$('#signMessage').empty();
+						$('#signMessage').append(status.message);
+					}
+				}
+
 			});
-		}
-	}
-2
-	function logError(errCheck){
-		$('#logMessage').empty(); //for when user does not fill fields properly
-		$('#logMessage').append(errCheck);
 	}
 
-	//Query database to see if user exist!
-	//makes sure that the fields have a valid input and fowards content to server
 	function logField(check){
 		console.log('checking fields');
 		if(check === false){
@@ -57,21 +56,13 @@ var main = function() {
 					window.location = 'profile';
 				}
 				else {
-					logError(status.message);
+					$('#logMessage').empty(); //for when user does not fill fields properly
+					$('#logMessage').append(status.message);
 				}
 			});
 		}
 	}
 
-	
-
-
-	//http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
-	function validateEmail(email) {
-    	//var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-    	var re = /^([\w-]+(?:\.[\w-]+)*)/i;
-    	return re.test(email);
-	}
 
 	function checkPassword (passwordVerify) {
 		if (password === passwordVerify){
@@ -142,18 +133,6 @@ var main = function() {
 			$('#ErrorMessage').append('Incorrect Email');
 		} else {
 			logEmail = $('#logEmail').val();
-			if(validateEmail(logEmail)){
-				console.log(logEmail);
-				console.log('valid email login');
-				$('#logEmailText').empty();
-				$('#logEmailText').append('Email:');
-			} else {
-				missingField = false;
-				logEmail = '';
-				$('#logEmail').val('');
-				$('#ErrorMessage').empty();
-				$('#ErrorMessage').append('Email:* Please Enter Valid Email');
-			}
 		}
 
 		if($('#logPassword').val() === ''){
@@ -232,16 +211,6 @@ var main = function() {
 			$('#emailText').append('Email:*');
 		}else {
 			email = $('#email').val();
-			if(validateEmail(email)){
-				$('#emailText').empty();
-				$('#emailText').append('Email: ');
-				console.log(email);
-				console.log('valid email');
-			} else {
-				missingField = false;
-				$('#emailText').empty();
-				$('#emailText').append('Email:* Enter Valid Email');
-			}
 		}
 
 		if($('#password').val() === ''){
@@ -263,7 +232,13 @@ var main = function() {
 			checkPassword(passwordType); 
 		}
 		occupation = $('#occupation').val();
-		SectionmissingField(missingField);
+
+		if(!missingField){
+			$('#fillSection').empty(); //for when user does nor fill fields properly
+			$('#fillSection').append('Please fill in area(s) with *.');
+		}else{
+					SectionmissingField('regular');
+		}
 
 	});
 	$('#vipsignButton').click(function(){
@@ -314,19 +289,9 @@ var main = function() {
 		if($('#email1').val() === ''){
 			missingField = false;
 			$('#emailText1').empty();
-			$('#emailText1').append('Email:*');
+			$('#emailText1').append('User Name:*');
 		}else {
 			email = $('#email1').val();
-			if(validateEmail(email)){
-				$('#emailText1').empty();
-				$('#emailText1').append('Email: ');
-				console.log(email);
-				console.log('valid email');
-			} else {
-				missingField = false;
-				$('#emailText1').empty();
-				$('#emailText1').append('Email:* Enter Valid Email');
-			}
 		}
 
 		if($('#password1').val() === ''){
@@ -359,7 +324,12 @@ var main = function() {
 		}
 		
 
-		SectionmissingField(missingField);
+		if(!missingField){
+			$('#fillVipSection').empty(); //for when user does nor fill fields properly
+			$('#fillVipSection').append('Please fill in area(s) with *.');
+		}else{
+			SectionmissingField('vip');
+		}
 
 	});
 	
@@ -367,28 +337,20 @@ var main = function() {
 		var forgotsecretAnswer;
 		var tempEmail;
 		var passFail =true;
+		var passFill = true;
 		var newpass;
 		console.log($('#forgotemail').val());
 		if($('#forgotemail').val() === ''){
-			
 			$('#forgotemailText').empty();
-			$('#forgotemailText').append('Email:*');
+			$('#forgotemailText').append('User Name:*');
+			passFill = false;
 		}else {
 			tempEmail = $('#forgotemail').val();
-			if(validateEmail(tempEmail)){
-				
-				$('#forgotemailText').empty();
-				$('#forgotemailText').append('Email: ');
-				console.log(tempEmail);
-				console.log('valid email');
-			} else {
-				
-				$('#forgotemailText').empty();
-				$('#forgotemailText').append('Email:* Enter Valid Email');
-			}
 		}
-	if($('#forgotsecretAnswer').val() === ''){
+
+		if($('#forgotsecretAnswer').val() === ''){
 			passFail = false;
+			passFill = false;
 			$('#forgotsecretAnswerText').empty();
 			$('#forgotsecretAnswerText').append('Secret Question *');
 		}else {
@@ -399,34 +361,39 @@ var main = function() {
 		
 		if($('#forgotnewpassword').val() === ''){
 			passFail = false;
+			passFill = false;
 			$('#forgotnewpasswordText').empty();
 			$('#forgotnewpasswordText').append('Retype-Password:*');
 		}else {
-				 newpass = $('#forgotnewpassword').val();
-			//checkPassword(newpass); 
+			 newpass = $('#forgotnewpassword').val();
 		}
 		
+		if(passFill){
+			$('#passFill').empty();
+		} else {
+			$('#passFill').empty();
+			$('#passFill').append('Please fill in area(s) with *.');
+		}
 		
 		if(validatePassword(newpass) && passFail){
-		
-		
-		forgotnewpassword
-		console.log(newpass + forgotsecretAnswer)
-		
-		var passInfo = {'email': tempEmail, 'secretAnswer': forgotsecretAnswer, 'password':newpass}; 
-		$.post("/resetPass", passInfo, function(data){
-				//PostInformation(data);
-				// console.log('/signup called');
-				window.location = 'index';
-			});
-			}
-			else{
+			var passInfo = {'email': tempEmail, 'secretAnswer': forgotsecretAnswer, 'password':newpass}; 
+			$.post("/resetPass", passInfo, function(data){
+				if(data.change){
+					$('#forgotemail').val('');
+					$('#forgotsecretAnswer').val('');
+					$('#forgotnewpassword').val(''); 
+					$( '#success' ).trigger( "click" );
+				} else{
+					$('#notFound').empty();
+					$('#notFound').append(data.message);
 
+				}
+			});
+
+		} else {
 				$('#forgotnewpasswordText').empty();
 				$('#forgotnewpasswordText').append('Retype-Password:*');
-				console.log("Error");
-			
-			}
+		}
 	});
 	
 };

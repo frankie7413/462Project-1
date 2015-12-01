@@ -34,6 +34,10 @@ router.get('/fail', function(req, res, next) {
   res.json({'url': false, message: req.flash('loginMessage')});
 });
 
+router.get('/failSign', function(req, res, next) {
+
+  res.json({'url': false, message: req.flash('signupMessage')});
+});
 
 // =====================================
 // LOGIN ===============================
@@ -64,14 +68,14 @@ router.get('/signup', function(req, res, next) {
 
 // process the signup form
 router.post('/signup', passport.authenticate('local-signup', {
-    successRedirect : '/profile', // redirect to the secure profile section
-    failureRedirect : '/signup', // redirect back to the signup page if there is an error
+    successRedirect : '/success', // redirect to the secure profile section
+    failureRedirect : '/failSign', // redirect back to the signup page if there is an error
     failureFlash : true // allow flash messages
 }));
 
 // process the signup form
 router.post('/resetPass', function (req, res){
-var check = req.body;
+  var check = req.body;
 // var resetPass = User({
 // 
 // 		email        : check.Email,
@@ -87,29 +91,29 @@ var check = req.body;
 
 console.log(check.email+"F");
 
- User.findOne({ 'local.email' :  check.email, 'local.secretAnswer' : check.secretAnswer }, function(err, user) {
+User.findOne({ 'local.email' :  check.email, 'local.secretAnswer' : check.secretAnswer }, function(err, user) {
             // if there are any errors, return the error
             if (err)
-                console.log(err);
+              console.log(err);
 
             // check to see if theres already a user with that email
             if (user) {
-    					updatePassword(user,check);
-            } else {
-					 console.log("Not found");
-            }
+              updatePassword(user,check,res);
+           } else {
+            res.json({'message': 'User does not exist.'});
+          }
         });    
 });
 
-function updatePassword(user,check){
+function updatePassword(user,check,res){
 console.log(check.password);
 var newUser = User();
 var pass = newUser.generateHash(check.password);
 console.log(newUser.generateHash(check.password));
 	User.update({'local.email' :  check.email}, {$set:{'local.password' : pass}}, function(err, result) {
     if (err)
-        //do something.
         console.log("errorrrrr");
+    res.json({'change': true});
 });;
       		
 } 

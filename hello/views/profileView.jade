@@ -131,6 +131,15 @@ html(lang='en')
       opacity:.80;
       filter: alpha(opacity=80);
       }
+      .centered {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      -moz-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      }
       .white_content {
       display: none;
       position: fixed;
@@ -411,7 +420,7 @@ html(lang='en')
             .filler
               #text.text
       // text input
-      #lightText.white_content
+      #lightText.white_content.centered 
         .container
           .panel.panel-default
             .panel-heading
@@ -430,7 +439,7 @@ html(lang='en')
         a(href='javascript:void(0)', onclick="document.getElementById('lightText').style.display='none';document.getElementById('fade').style.display='none'")
       #alert innn9522222222555555nnttttooo
       // Upload Media
-      #light.white_content
+      #light.white_content.centered 
         .container
           .panel.panel-default
             .panel-heading
