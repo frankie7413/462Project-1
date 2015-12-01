@@ -116,7 +116,7 @@ html(lang='en')
       document.getElementById('sizeError').innerHTML = '<ul>' + output.join('') + '</ul>';
       }
     style.
-      .black_overlay{
+      div.black_overlay{
       display: none;
       position: fixed;
       top: 0%;
@@ -134,8 +134,8 @@ html(lang='en')
       .white_content {
       display: none;
       position: fixed;
-      width:80%;
-      height: 100%;
+      width:50%;
+      height: 50%;
       padding: 10px;
       z-index:1002;
       overflow: auto;
@@ -143,6 +143,15 @@ html(lang='en')
       margin-right: auto ;
       max-width:600px;
       margin-top:40px;
+      }
+      .centered {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      -moz-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
       }
       <!DOCTYPE html>
       <html lang="en">
@@ -265,19 +274,15 @@ html(lang='en')
       </script>
       <style>
       .black_overlay{
-      display: none;
-      position: absolute;
-      top: 0%;
-      left: 0%;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-      height: 100%;
-      background-color: black;
+      opacity:0.7;
+      filter: alpha(opacity=20);
+      background-color:#000; 
+      width:100%; 
+      height:100%; 
       z-index:10;
-      -moz-opacity: 0.8;
-      opacity:.80;
-      filter: alpha(opacity=80);
+      top:0; 
+      left:0; 
+      position:fixed; 
       }
       .white_content {
       display: none;
@@ -353,6 +358,7 @@ html(lang='en')
     link(rel='stylesheet', type='text/css', href='assets/slidingheader/layout-simple.css')
     link(rel='stylesheet', href='assets/style.css')
   body#home
+    #fade.black_overlay
     #container
       header#intro.intro(style='background-position:cen‌​ter;      background-repeat:no-repeat;background-size: 100% 100%;')
         .intro__content
@@ -411,7 +417,7 @@ html(lang='en')
             .filler
               #text.text
       // text input
-      #lightText.white_content
+      #lightText.white_content.centered
         .container
           .panel.panel-default
             .panel-heading
@@ -428,9 +434,9 @@ html(lang='en')
           // /text input
         // /container
         a(href='javascript:void(0)', onclick="document.getElementById('lightText').style.display='none';document.getElementById('fade').style.display='none'")
-      #alert innn9522222222555555nnttttooo
+      #alert pictures
       // Upload Media
-      #light.white_content
+      #light.white_content.centered
         .container
           .panel.panel-default
             .panel-heading
@@ -452,7 +458,6 @@ html(lang='en')
           // /Upload Media
         // /container
         a(href='javascript:void(0)', onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'")
-      #fade.black_overlay
       // /overlay
       section.items-wrap
         .container
